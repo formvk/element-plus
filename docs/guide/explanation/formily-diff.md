@@ -66,7 +66,7 @@ import { Text, TextInput, TextSelect, TextDatePicker } from '@formvk/element-plu
 
 ## 弹窗表单
 
-本包不直接提供 `FormDialog` / `FormDrawer` 组件，而是提供统一的 `PopupForm` 容器：`type="modal"` 时渲染 `ModalForm`，默认渲染 `DrawerForm`，由 `@formvk/models` 的 `PopupModel` 驱动开关与提交。状态更透明，也便于与业务路由结合，详见 [弹窗表单](/containers/popup)。
+本包不提供 `FormDialog` / `FormDrawer` 组件。弹窗表单由容器内的弹窗模型承担：`PopupForm` 基于 `@formvk/models` 的 `PopupModel` 管理打开、关闭、校验与提交，`type="modal"` 时渲染 `ModalForm`（内部使用 `ElDialog`），默认渲染 `DrawerForm`（内部使用 `ElDrawer`）；`CrudTable` 的新增 / 编辑弹窗也复用同一模型。相比组件式弹窗，容器内的弹窗模型状态更透明，也更适合与提交、刷新、路由结合，详见 [弹窗表单](/containers/popup)。
 
 ## 样式与技术栈
 
