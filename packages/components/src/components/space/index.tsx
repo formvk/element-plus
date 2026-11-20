@@ -1,4 +1,5 @@
 import { ElSpace } from 'element-plus'
+import type { SpacePropsPublic } from 'element-plus'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
@@ -12,7 +13,9 @@ export type ISpaceProps = {
   fill?: boolean
 }
 
-export const Space = defineComponent({
+type SpaceWrapperProps = Omit<SpacePropsPublic, 'size'> & ISpaceProps
+
+export const Space = defineComponent<SpaceWrapperProps>({
   name: 'Space',
   inheritAttrs: false,
   props: {

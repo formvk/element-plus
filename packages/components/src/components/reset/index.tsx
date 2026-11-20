@@ -3,6 +3,7 @@ import { isForm } from '@formvk/core'
 import { isFn } from '@formvk/shared'
 import { useParentForm } from '@formvk/vue'
 import { ElButton } from 'element-plus'
+import type { ButtonProps } from 'element-plus'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
@@ -12,7 +13,7 @@ export interface IResetProps extends IFieldResetOptions {
   onResetValidateFailed?: (feedbacks: IFormFeedback[]) => void
 }
 
-export const Reset = defineComponent({
+export const Reset = defineComponent<ButtonProps & IResetProps>({
   name: 'Reset',
   inheritAttrs: false,
   props: {

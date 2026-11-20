@@ -2,6 +2,7 @@ import type { ArrayField } from '@formvk/core'
 import type { Schema } from '@formvk/schema'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { defineComponent, computed } from 'vue'
+import type { HTMLAttributes } from 'vue'
 
 import { isComponentOf, SortableContainer, usePrefixCls } from '../../shared'
 import { cls } from '../../shared'
@@ -23,10 +24,8 @@ const useAddition = () => {
   )
 }
 
-export const ArrayItems = defineComponent({
-  name: 'ArrayItems',
-  inheritAttrs: false,
-  setup(_, { attrs }) {
+export const ArrayItems = defineComponent<HTMLAttributes>(
+  (_, { attrs }) => {
     const field = useField<ArrayField>()
     const schema = useFieldSchema()
     const prefixCls = usePrefixCls('array-items')
@@ -74,9 +73,10 @@ export const ArrayItems = defineComponent({
       )
     }
   },
-})
+  { name: 'ArrayItems', inheritAttrs: false }
+)
 
-export const ArrayItemsItem = defineComponent({
+export const ArrayItemsItem = defineComponent<HTMLAttributes & { type?: 'card' | 'divide' }>({
   name: 'ArrayItemsItem',
   inheritAttrs: false,
   props: {

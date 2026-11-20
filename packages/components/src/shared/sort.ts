@@ -1,6 +1,8 @@
 import Sortable from 'sortablejs'
 import { defineComponent, h, onBeforeUnmount, onMounted, ref } from 'vue'
 
+import { usePrefixCls } from '../hooks/usePrefixCls'
+
 export interface ISortableContainerProps {
   list: any[]
   start?: number
@@ -23,13 +25,14 @@ export const SortableContainer = defineComponent({
   props: {
     list: { type: Array, default: () => [] },
     start: { type: Number, default: 0 },
-    handle: { type: String, default: '.formvk-array-base-sort-handle' },
+    handle: String,
     tag: { type: String, default: 'div' },
     onSortStart: Function,
     onSortEnd: Function,
     sortableOptions: Object,
   },
   setup(props, { slots, attrs }) {
+    const prefixCls = usePrefixCls()
     const containerRef = ref<HTMLElement>()
     let sortable: Sortable | null = null
 
@@ -37,10 +40,10 @@ export const SortableContainer = defineComponent({
       if (!containerRef.value) return
       sortable = Sortable.create(containerRef.value, {
         animation: 150,
-        handle: props.handle,
-        ghostClass: 'formvk-sort-ghost',
-        chosenClass: 'formvk-sort-chosen',
-        dragClass: 'formvk-sort-drag',
+        handle: props.handle || `.${prefixCls}-array-base-sort-handle`,
+        ghostClass: `${prefixCls}-sort-ghost`,
+        chosenClass: `${prefixCls}-sort-chosen`,
+        dragClass: `${prefixCls}-sort-drag`,
         ...props.sortableOptions,
         onStart: event => {
           props.onSortStart?.({ oldIndex: event.oldIndex ?? 0, newIndex: event.newIndex ?? 0 })
@@ -58,6 +61,3 @@ export const SortableContainer = defineComponent({
     return () => h(props.tag, { ref: containerRef, ...attrs }, slots.default?.())
   },
 })
-
-/** 排序手柄统一类名，Sortable 通过该选择器限定拖拽区域 */
-export const SORT_HANDLE_CLASS = 'formvk-array-base-sort-handle'

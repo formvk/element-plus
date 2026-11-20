@@ -1,5 +1,6 @@
 import { connect, mapReadPretty, useField } from '@formvk/vue'
 import { ElInput } from 'element-plus'
+import type { InputProps } from 'element-plus'
 import { computed, defineComponent } from 'vue'
 import type { CSSProperties } from 'vue'
 
@@ -9,6 +10,8 @@ export interface IPasswordProps {
   checkStrength?: boolean
   showPassword?: boolean
 }
+
+type PasswordWrapperProps = Omit<InputProps, 'showPassword'> & IPasswordProps
 
 const isNum = (c: number) => c >= 48 && c <= 57
 const isLower = (c: number) => c >= 97 && c <= 122
@@ -155,7 +158,7 @@ const blockStyle: CSSProperties = {
   transform: 'translate(-50%, 0)',
 }
 
-const PasswordWrapper = defineComponent({
+const PasswordWrapper = defineComponent<PasswordWrapperProps>({
   name: 'Password',
   inheritAttrs: false,
   props: {

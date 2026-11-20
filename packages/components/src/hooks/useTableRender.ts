@@ -45,6 +45,17 @@ export function useTableModel<Model extends TableModel = TableModel>() {
   return useTableRenderContext<Model>().value.table
 }
 
+/** 合并上下文 scope、组件 scope 与模型状态，作为表达式作用域 */
+export function useTableScope(scope?: Record<string, unknown>) {
+  const context = useTableRenderContext()
+  return computed(() => ({
+    ...context.value.scope,
+    ...scope,
+    $table: context.value.table,
+    $state: context.value.table.state,
+  }))
+}
+
 /** 渲染器占位符：优先使用参数，其次上下文，最后回退到 `--` */
 export function useTablePlaceholder(value?: VNodeChild) {
   const context = useTableRenderContext()

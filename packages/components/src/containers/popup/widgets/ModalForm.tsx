@@ -1,5 +1,6 @@
 import type { PopupModel } from '@formvk/models'
 import { ElButton, ElDialog, ElSpace } from 'element-plus'
+import type { DialogPropsPublic } from 'element-plus'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
@@ -18,7 +19,7 @@ export interface ModalFormProps {
   onCancel?: (e: PopupTriggerEvent) => boolean | void | Promise<boolean | void>
 }
 
-export const ModalForm = defineComponent({
+export const ModalForm = defineComponent<ModalFormProps & DialogPropsPublic>({
   name: 'ModalForm',
   inheritAttrs: false,
   props: {

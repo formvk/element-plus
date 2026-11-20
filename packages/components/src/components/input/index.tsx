@@ -1,14 +1,13 @@
 import { Loading } from '@element-plus/icons-vue'
 import { connect, mapReadPretty, useField } from '@formvk/vue'
 import { ElIcon, ElInput } from 'element-plus'
+import type { InputProps } from 'element-plus'
 import { defineComponent } from 'vue'
 
 import { TextInput } from '../preview-text'
 
-const InputWrapper = defineComponent({
-  name: 'Input',
-  inheritAttrs: false,
-  setup(_, { attrs, slots }) {
+const InputWrapper = defineComponent<InputProps>(
+  (_, { attrs, slots }) => {
     const field = useField()
     return () => (
       <ElInput {...attrs}>
@@ -29,19 +28,19 @@ const InputWrapper = defineComponent({
       </ElInput>
     )
   },
-})
+  { name: 'Input', inheritAttrs: false }
+)
 
-const TextAreaWrapper = defineComponent({
-  name: 'TextArea',
-  inheritAttrs: false,
-  setup(_, { attrs, slots }) {
+const TextAreaWrapper = defineComponent<InputProps>(
+  (_, { attrs, slots }) => {
     return () => (
       <ElInput {...attrs} type="textarea">
         {slots}
       </ElInput>
     )
   },
-})
+  { name: 'TextArea', inheritAttrs: false }
+)
 
 export const Input = connect(InputWrapper, mapReadPretty(TextInput))
 

@@ -28,13 +28,14 @@
       "import": "./dist/index.js"
     },
     "./style.css": "./dist/style.css",
+    "./style.scss": "./dist/style.scss",
     "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && node scripts/build-style.mjs",
     "dev": "vite build --watch",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint src"

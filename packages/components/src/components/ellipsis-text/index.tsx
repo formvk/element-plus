@@ -10,7 +10,7 @@ export interface EllipsisTextProps {
 }
 
 /** 单行省略文本，内容溢出时通过 Tooltip 展示完整内容 */
-export const EllipsisText = defineComponent({
+export const EllipsisText = defineComponent<EllipsisTextProps>({
   name: 'EllipsisText',
   inheritAttrs: false,
   props: {

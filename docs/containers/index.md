@@ -17,6 +17,7 @@
 | [SchemaForm](/containers/schema-form) | `Form` + `SchemaField` 的一层封装，直接渲染 schema |
 | [PopupForm](/containers/popup) | 基于 `PopupModel` 的弹窗表单，按 `type` 渲染 `ElDrawer` 或 `ElDialog` |
 | [CrudTable](/containers/crud-table) | 基于 `TableModel`，整合搜索表单、分页、新增/编辑弹窗 |
+| [表格组件](/containers/crud-table#自由组合) | `TableRenderProvider` + `SearchForm` / `DataTable` / `AddPopup` / `EditPopup`，可脱离 `CrudTable` 自由组装 |
 | [表格渲染器](/containers/renders) | 基于 `renders` 的常用表格列渲染器，配合 `CrudTable` 使用 |
 
 ## 安装

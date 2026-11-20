@@ -1,9 +1,17 @@
 import { connect, mapReadPretty } from '@formvk/vue'
 import { ElDatePicker } from 'element-plus'
+import type { DatePickerPropsPublic } from 'element-plus'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 import { TextDatePicker, TextDateRangePicker } from '../preview-text'
+
+type DatePickerWrapperProps = DatePickerPropsPublic & {
+  /** 快捷选择器类型，用于推导默认 format */
+  picker?: string
+  /** 是否启用时间选择，等价于 type="datetime" */
+  showTime?: boolean
+}
 
 const getDefaultFormat = (type: string, picker?: string) => {
   if (picker === 'month' || type === 'month') return 'YYYY-MM'
@@ -14,7 +22,7 @@ const getDefaultFormat = (type: string, picker?: string) => {
 }
 
 const createDatePicker = (defaultType: string, name: string) =>
-  defineComponent({
+  defineComponent<DatePickerWrapperProps>({
     name,
     inheritAttrs: false,
     props: {

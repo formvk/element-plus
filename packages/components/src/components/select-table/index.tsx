@@ -4,6 +4,7 @@ import type { Schema } from '@formvk/schema'
 import { isArr, isBool, isFn } from '@formvk/shared'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElCheckbox, ElInput, ElRadio, ElTable, ElTableColumn, vLoading } from 'element-plus'
+import type { TableProps } from 'element-plus'
 import { computed, defineComponent, ref, withDirectives } from 'vue'
 import type { PropType } from 'vue'
 
@@ -43,6 +44,8 @@ export interface ISelectTableProps {
   disabled?: boolean
 }
 
+type SelectTablePublicProps = ISelectTableProps & TableProps & { prefixCls?: string }
+
 const isColumnComponent = (schema: Schema) => {
   return isComponentOf(schema.component, 'Column')
 }
@@ -57,7 +60,7 @@ const addPrimaryKey = (dataSource: any[], rowKey: (record: any) => string, prima
     }
   })
 
-export const SelectTable = defineComponent({
+export const SelectTable = defineComponent<SelectTablePublicProps>({
   name: 'SelectTable',
   inheritAttrs: false,
   props: {

@@ -3,13 +3,13 @@ import type { Schema } from '@formvk/schema'
 import { isArr, isBool, isFn } from '@formvk/shared'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElPagination, ElTable, ElTableColumn } from 'element-plus'
+import type { TableProps } from 'element-plus'
 import Sortable from 'sortablejs'
 import type { InjectionKey } from 'vue'
 import { computed, defineComponent, inject, onBeforeUnmount, onMounted, provide, ref, watch } from 'vue'
 import type { PropType } from 'vue'
 
 import { cls, isComponentOf, usePrefixCls } from '../../shared'
-import { SORT_HANDLE_CLASS } from '../../shared'
 import { Addition, ArrayBase, ArrayBaseItem, useArray } from '../array-base'
 import type { IAdditionProps } from '../array-base'
 
@@ -106,7 +106,9 @@ const useAddition = () => {
   )
 }
 
-export const ArrayTable = defineComponent({
+export const ArrayTable = defineComponent<
+  TableProps & { pagination?: boolean | Record<string, any>; prefixCls?: string }
+>({
   name: 'ArrayTable',
   inheritAttrs: false,
   props: {
@@ -119,6 +121,7 @@ export const ArrayTable = defineComponent({
   setup(props, { attrs, slots }) {
     const field = useField<ArrayField>()
     const prefixCls = usePrefixCls('array-table', props)
+    const basePrefixCls = usePrefixCls()
     const sources = useArrayTableSources()
     const addition = useAddition()
     const tableRef = ref<any>()
@@ -213,12 +216,12 @@ export const ArrayTable = defineComponent({
     }
 
     onMounted(() => {
-      const tbody = tableRef.value?.$el?.querySelector('.el-table__body-wrapper tbody') as HTMLElement | null
+      const tbody = tableRef.value?.$el?.querySelector('tbody') as HTMLElement | null
       if (!tbody) return
       sortable = Sortable.create(tbody, {
         animation: 150,
-        handle: `.${SORT_HANDLE_CLASS}`,
-        ghostClass: 'formvk-sort-ghost',
+        handle: `.${basePrefixCls}-array-base-sort-handle`,
+        ghostClass: `${basePrefixCls}-sort-ghost`,
         onEnd: event => {
           const start = startIndex.value
           const oldIndex = (event.oldIndex ?? 0) + start
@@ -294,10 +297,8 @@ export const ArrayTable = defineComponent({
   },
 })
 
-export const ArrayTableAddition = defineComponent({
-  name: 'ArrayTableAddition',
-  inheritAttrs: false,
-  setup(_, { attrs, slots }) {
+export const ArrayTableAddition = defineComponent<IAdditionProps>(
+  (_, { attrs, slots }) => {
     const array = useArray()
     const pagination = inject(ArrayTablePaginationContext, {})
     return () => (
@@ -318,4 +319,5 @@ export const ArrayTableAddition = defineComponent({
       </Addition>
     )
   },
-})
+  { name: 'ArrayTableAddition', inheritAttrs: false }
+)

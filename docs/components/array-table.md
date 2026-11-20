@@ -32,7 +32,7 @@
 | `ArrayTableAddition` | 表格底部的新增按钮；新增后超过当前页时自动翻到下一页 |
 | `Addition` | 通用新增按钮，不会自动翻页 |
 | `Index` | 序号，渲染为 `#1.` 形式 |
-| `SortHandle` | 拖拽排序手柄，基于 SortableJS 监听 `formvk-array-base-sort-handle` 类名 |
+| `SortHandle` | 拖拽排序手柄，基于 SortableJS 监听 `el-formvk-array-base-sort-handle` 类名 |
 | `Remove` | 删除按钮 |
 | `MoveUp` / `MoveDown` | 上移 / 下移按钮 |
 | `Copy` | 复制按钮 |

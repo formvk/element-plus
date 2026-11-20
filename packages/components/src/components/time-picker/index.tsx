@@ -1,12 +1,13 @@
 import { connect, mapReadPretty } from '@formvk/vue'
 import { ElTimePicker } from 'element-plus'
+import type { TimePickerDefaultPropsPublic } from 'element-plus'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 import { TextTimePicker, TextTimeRangePicker } from '../preview-text'
 
 const createTimePicker = (range: boolean, name: string) =>
-  defineComponent({
+  defineComponent<TimePickerDefaultPropsPublic>({
     name,
     inheritAttrs: false,
     props: {

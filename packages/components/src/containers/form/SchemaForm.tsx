@@ -5,6 +5,7 @@ import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 import { Form } from '../../components/form'
+import type { FormProps } from '../../components/form'
 
 export interface SchemaFormProps {
   /** 表单模型 */
@@ -19,7 +20,7 @@ export interface SchemaFormProps {
   onAutoSubmitFailed?: (feedbacks: IFormFeedback[]) => void
 }
 
-export const SchemaForm = defineComponent({
+export const SchemaForm = defineComponent<SchemaFormProps & FormProps>({
   name: 'SchemaForm',
   inheritAttrs: false,
   props: {

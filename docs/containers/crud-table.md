@@ -54,6 +54,9 @@
 | `scope` | `Record<string, unknown>` | — | 表达式作用域，同时合并进表格渲染器参数 |
 | `components` | `Record<string, any>` | — | 可选，扁平组件映射；默认继承顶层 `OptionsProvider`，见 [容器总览](/containers/) |
 | `placeholder` | `VNodeChild` | `--` | 单元格空值占位符，供 [`renders`](/containers/renders) 使用 |
+| `columns` | `DataTableProps['columns']` | — | 列配置，支持 `{{ }}` 表达式与 `render`；与默认插槽同时存在时以插槽为准 |
+| `pagination` | `false \| DataTablePagination` | 模型分页 | 分页配置，`false` 关闭分页，其余属性透传给 `ElPagination` |
+| `searchProps` | `SearchFormProps` | — | 搜索表单配置，覆盖内部默认的 `layout` / `feedbackLayout` / `wrapperWidth` |
 | `popupProps` | `CrudTablePopupProps` | — | 新增与编辑弹窗的公共配置 |
 | `addProps` | `CrudTablePopupProps` | — | 新增弹窗配置，覆盖 `popupProps` |
 | `editProps` | `CrudTablePopupProps` | — | 编辑弹窗配置，覆盖 `popupProps` |
@@ -75,6 +78,41 @@
   </ElTableColumn>
 </CrudTable>
 ```
+
+也可以改用 `columns` 配置列，每列的 `render` 直接使用 `renders` 渲染器，无需再包一层 `Cell`；`columns` 会与 `scope`、`$table`、`$state` 一起编译，因此 `label`、`prop` 等字段同样支持 `{{ }}` 表达式：
+
+```vue
+<script setup lang="ts">
+import { CrudTable, renders } from '@formvk/element-plus'
+import type { DataTableProps } from '@formvk/element-plus'
+
+const columns: DataTableProps['columns'] = [
+  { label: '序号', width: 70, render: renders.serial() },
+  { label: '用户名', prop: 'username', render: renders.text() },
+  { label: '邮箱', prop: 'email', render: renders.text({ ellipsis: true }) },
+]
+</script>
+
+<template>
+  <CrudTable :table="table" row-key="id" :columns="columns" />
+</template>
+```
+
+列配置字段与 `ElTableColumn` 对齐，常用字段如下：
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `label` | `string` | 列标题 |
+| `prop` | `string` | 字段名，支持 `a.b` 形式的多层路径 |
+| `render` | `ColumnRender` | 单元格渲染函数，签名与 [`renders`](/containers/renders) 一致 |
+| `formatter` | `(row, column, value, index) => VNodeChild` | 单元格格式化，透传给 `ElTableColumn` |
+| `width` / `minWidth` | `string \| number` | 列宽 / 最小列宽 |
+| `fixed` | `boolean \| 'left' \| 'right'` | 固定列 |
+| `align` / `headerAlign` | `'left' \| 'center' \| 'right'` | 单元格 / 表头对齐方式 |
+| `sortable` | `boolean \| 'custom'` | 是否可排序 |
+| `type` | `string` | 列类型：`selection` / `index` / `expand` |
+| `children` | `DataTableColumn[]` | 嵌套子列（多级表头） |
+| 其他 | — | 透传给 `ElTableColumn`，如 `showOverflowTooltip`、`className` |
 
 ## 弹窗配置
 
@@ -119,6 +157,21 @@ import { renders } from '@formvk/element-plus'
 ```
 
 `renders.xxx()` 返回 `(text, record, index) => VNodeChild` 的列渲染函数；由于 `ElTableColumn` 只提供作用域插槽，需要像 demo 一样用一个极简的 `Cell` 组件在插槽内调用渲染函数。渲染器可读取 `table`、`$state`、`scope` 与单元格上下文，完整列表见 [表格渲染器](/containers/renders)。
+
+## 自由组合
+
+`CrudTable` 只是「搜索 + 表格 + 新增 / 编辑」的一层组合封装，适合标准场景。需要自定义布局时，改用 `TableRenderProvider` 注入模型，再自由组装下列组件：
+
+<demo vue="../demos/crud-table-widgets.vue" title="Provider + 搜索表单 + 表格 + 弹窗自由组装" description="搜索区与表格放进 Card，新增按钮放到右上角，各组件共享同一个 TableModel" />
+
+| 组件 | 说明 |
+| --- | --- |
+| `TableRenderProvider` | 注入 `{ table, placeholder?, scope? }`，需包裹其余组件；`CrudTable` 内部同样使用它 |
+| `SearchForm` | 绑定 `table.form`，默认 `layout="inline"`，提交时调用 `table.search()`；属性：`schema` / `scope` / `components`，其余透传给 `SchemaForm` |
+| `DataTable` | 读取 `table.records` / `table.pagination` / 加载态，挂载时调用 `table.onMount()`，分页变化调用 `table.onSearch({ current, pageSize, total })`；属性：`columns` / `pagination` / `scope` / `placeholder`，其余透传给 `ElTable` |
+| `AddPopup` / `EditPopup` | 基于 `PopupForm`，分别复用 `table.addPopup` / `table.editPopup`；属性：`type` / `schema` / `scope` / `components`，其余透传给 `PopupForm` |
+
+`DataTable` 的 `pagination` 为 `false` 时关闭分页；传对象时会在模型分页基础上覆盖 `layout` / `pageSizes` 等 `ElPagination` 属性。`DataTable` / `SearchForm` 的 `scope` 与 `placeholder` 支持单独覆盖，未传时继承 `TableRenderProvider`。
 
 ## 行为说明
 

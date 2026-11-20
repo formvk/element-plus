@@ -3,6 +3,7 @@ import { isVoidField } from '@formvk/core'
 import type { Field } from '@formvk/core'
 import { useField } from '@formvk/vue'
 import { ElIcon, ElPopover } from 'element-plus'
+import type { PopoverPropsPublic } from 'element-plus'
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import type { CSSProperties, PropType } from 'vue'
 
@@ -50,10 +51,8 @@ const useFormItemProps = () => {
   })
 }
 
-export const Editable = defineComponent({
-  name: 'Editable',
-  inheritAttrs: false,
-  setup(_, { attrs, slots }) {
+export const Editable = defineComponent<IFormItemProps>(
+  (_, { attrs, slots }) => {
     const [editable, setEditable] = useEditable()
     const pattern = useParentPattern()
     const itemProps = useFormItemProps()
@@ -133,9 +132,10 @@ export const Editable = defineComponent({
       </div>
     )
   },
-})
+  { name: 'Editable', inheritAttrs: false }
+)
 
-export const EditablePopover = defineComponent({
+export const EditablePopover = defineComponent<PopoverPropsPublic & { title?: any; style?: CSSProperties }>({
   name: 'EditablePopover',
   inheritAttrs: false,
   props: {

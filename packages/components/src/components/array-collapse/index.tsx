@@ -3,6 +3,7 @@ import type { Schema } from '@formvk/schema'
 import { toArr } from '@formvk/shared'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElBadge, ElCard, ElCollapse, ElCollapseItem, ElEmpty } from 'element-plus'
+import type { CollapsePropsPublic } from 'element-plus'
 import { computed, defineComponent, ref, watch } from 'vue'
 
 import { cls, isComponentOf, usePrefixCls } from '../../shared'
@@ -41,7 +42,7 @@ const isOperationComponent = (schema: Schema) => {
   )
 }
 
-const takeDefaultActiveKeys = (field: ArrayField, defaultOpenPanelCount: number) => {
+const takeDefaultActiveKeys = (field: ArrayField, defaultOpenPanelCount = 5) => {
   const dataSource = Array.isArray(field.value) ? field.value : []
   return dataSource.slice(0, defaultOpenPanelCount).map((_, index) => String(field.getRecordKey(index)))
 }
@@ -56,7 +57,7 @@ const insertActiveKeys = (activeKeys: string[], index: number) => {
   }, [])
 }
 
-export const ArrayCollapse = defineComponent({
+export const ArrayCollapse = defineComponent<CollapsePropsPublic & IArrayCollapseProps>({
   name: 'ArrayCollapse',
   inheritAttrs: false,
   props: {

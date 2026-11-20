@@ -4,8 +4,9 @@ import type { Schema } from '@formvk/schema'
 import { clone, isStr, isUndef, isValid } from '@formvk/shared'
 import { useField, useFieldSchema } from '@formvk/vue'
 import { ElButton } from 'element-plus'
+import type { ButtonProps } from 'element-plus'
 import { defineComponent, provide } from 'vue'
-import type { PropType } from 'vue'
+import type { HTMLAttributes, PropType } from 'vue'
 
 import { ArrayBaseContext, ItemContext, useArray, useIndex } from '../../hooks'
 import { cls, usePrefixCls } from '../../shared'
@@ -29,6 +30,23 @@ export interface IArrayBaseProps {
   onRemove?: (index: number) => void
   onMoveDown?: (index: number) => void
   onMoveUp?: (index: number) => void
+}
+
+/** 操作按钮透传 ElButton 属性，这里合并按钮类型与数组操作自有属性 */
+type IArrayActionProps = ButtonProps & {
+  index?: number
+  title?: string
+}
+
+type IArrayCopyProps = IArrayActionProps & {
+  copyRecord?: (record: any, index: number) => any
+}
+
+type IArrayAdditionProps = ButtonProps & {
+  title?: string
+  method?: 'push' | 'unshift'
+  defaultValue?: any
+  onClick?: (e: MouseEvent) => void
 }
 
 export { useArray, useIndex, useRecord } from '../../hooks'
@@ -97,10 +115,8 @@ export const ArrayBaseItem = defineComponent({
 })
 
 /** 排序手柄，类名与 SortableContainer 的默认 handle 选择器一致 */
-export const SortHandle = defineComponent({
-  name: 'ArrayBaseSortHandle',
-  inheritAttrs: false,
-  setup(_, { attrs }) {
+export const SortHandle = defineComponent<ButtonProps>(
+  (_, { attrs }) => {
     const array = useArray()
     const prefixCls = usePrefixCls('array-base')
     return () => {
@@ -117,12 +133,11 @@ export const SortHandle = defineComponent({
       )
     }
   },
-})
+  { name: 'ArrayBaseSortHandle', inheritAttrs: false }
+)
 
-export const Index = defineComponent({
-  name: 'ArrayBaseIndex',
-  inheritAttrs: false,
-  setup(_, { attrs }) {
+export const Index = defineComponent<HTMLAttributes>(
+  (_, { attrs }) => {
     const index = useIndex()
     const prefixCls = usePrefixCls('array-base')
     return () => (
@@ -131,9 +146,10 @@ export const Index = defineComponent({
       </span>
     )
   },
-})
+  { name: 'ArrayBaseIndex', inheritAttrs: false }
+)
 
-export const Addition = defineComponent({
+export const Addition = defineComponent<IArrayAdditionProps>({
   name: 'ArrayBaseAddition',
   inheritAttrs: false,
   props: {
@@ -179,7 +195,7 @@ export const Addition = defineComponent({
   },
 })
 
-export const Copy = defineComponent({
+export const Copy = defineComponent<IArrayCopyProps>({
   name: 'ArrayBaseCopy',
   inheritAttrs: false,
   props: {
@@ -232,7 +248,7 @@ export const Copy = defineComponent({
   },
 })
 
-export const Remove = defineComponent({
+export const Remove = defineComponent<IArrayActionProps>({
   name: 'ArrayBaseRemove',
   inheritAttrs: false,
   props: {
@@ -275,7 +291,7 @@ export const Remove = defineComponent({
   },
 })
 
-export const MoveDown = defineComponent({
+export const MoveDown = defineComponent<IArrayActionProps>({
   name: 'ArrayBaseMoveDown',
   inheritAttrs: false,
   props: {
@@ -318,7 +334,7 @@ export const MoveDown = defineComponent({
   },
 })
 
-export const MoveUp = defineComponent({
+export const MoveUp = defineComponent<IArrayActionProps>({
   name: 'ArrayBaseMoveUp',
   inheritAttrs: false,
   props: {

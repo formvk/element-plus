@@ -15,7 +15,7 @@ export interface FormProps extends IFormLayoutProps {
   previewTextPlaceholder?: VNodeChild
 }
 
-export const Form = defineComponent({
+export const Form = defineComponent<FormProps>({
   name: 'Form',
   inheritAttrs: false,
   props: {

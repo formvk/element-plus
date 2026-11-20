@@ -1,5 +1,6 @@
 import { createSchema } from '@formvk/vue'
 import { mount } from '@vue/test-utils'
+import { ElConfigProvider } from 'element-plus'
 import { describe, expect, it } from 'vitest'
 
 import { Form } from '../index'
@@ -92,9 +93,39 @@ describe('SchemaField 基础渲染', () => {
     const wrapper = mountForm(form, schema)
     await new Promise(resolve => setTimeout(resolve, 0))
 
-    expect(wrapper.html()).toContain('formvk-grid')
+    expect(wrapper.html()).toContain('el-formvk-grid')
     expect(wrapper.html()).toContain('el-tabs')
     expect(wrapper.html()).toContain('el-collapse')
+
+    wrapper.unmount()
+  })
+
+  it('ElConfigProvider 自定义 namespace 时类名前缀跟随变化', async () => {
+    const form = createForm()
+    const schema = createSchema({
+      grid: f.FormGrid({
+        properties: {
+          g: f.Input({ title: 'G' }),
+        },
+      }),
+    })
+
+    const wrapper = mount(
+      () => (
+        <ElConfigProvider namespace="ns">
+          <OptionsProvider>
+            <Form form={form}>
+              <SchemaField schema={schema} />
+            </Form>
+          </OptionsProvider>
+        </ElConfigProvider>
+      ),
+      { attachTo: document.body }
+    )
+    await new Promise(resolve => setTimeout(resolve, 0))
+
+    expect(wrapper.html()).toContain('ns-formvk-grid')
+    expect(wrapper.html()).not.toContain('el-formvk-grid')
 
     wrapper.unmount()
   })

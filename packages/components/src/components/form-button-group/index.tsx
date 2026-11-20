@@ -5,8 +5,9 @@
  * 4. 吸底布局
  */
 import { ElSpace } from 'element-plus'
+import type { SpacePropsPublic } from 'element-plus'
 import { computed, defineComponent, onMounted, ref } from 'vue'
-import type { CSSProperties, PropType } from 'vue'
+import type { CSSProperties, HTMLAttributes, PropType } from 'vue'
 
 import { cls, usePrefixCls } from '../../shared'
 import { BaseItem } from '../form-item'
@@ -48,7 +49,7 @@ function getInheritedBackgroundColor(el: HTMLElement): string {
   return getInheritedBackgroundColor(el.parentElement)
 }
 
-const FormButtonGroupItem = defineComponent({
+const FormButtonGroupItem = defineComponent<IFormItemProps & { gutter?: number }>({
   name: 'FormButtonGroupItem',
   inheritAttrs: false,
   props: {
@@ -77,7 +78,7 @@ const FormButtonGroupItem = defineComponent({
   },
 })
 
-const FormButtonGroupSticky = defineComponent({
+const FormButtonGroupSticky = defineComponent<HTMLAttributes & IStickyProps>({
   name: 'FormButtonGroupSticky',
   inheritAttrs: false,
   props: {
@@ -122,7 +123,7 @@ const FormButtonGroupSticky = defineComponent({
   },
 })
 
-const InternalFormButtonGroup = defineComponent({
+const InternalFormButtonGroup = defineComponent<Omit<SpacePropsPublic, 'size'> & IFormButtonGroupProps>({
   name: 'FormButtonGroup',
   inheritAttrs: false,
   props: {

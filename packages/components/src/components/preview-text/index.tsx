@@ -15,9 +15,53 @@ export interface ITextProps extends HTMLAttributes {
   modelValue?: any
 }
 
+/** 输入类预览文本：addon / 前后缀来自字段透传的 attrs */
+export interface ITextInputProps extends Omit<ITextProps, 'prefix'> {
+  addonBefore?: VNodeChild
+  addonAfter?: VNodeChild
+  prefix?: VNodeChild
+  suffix?: VNodeChild
+}
+
+export interface ITextInputNumberProps extends ITextInputProps {
+  formatter?: (value: string | number, info?: any) => string
+}
+
+export interface ITextSelectProps extends ITextProps {
+  options?: any[]
+  multiple?: boolean
+  mode?: string
+  /** option 字段映射，兼容 antd 命名的 label / value */
+  props?: {
+    label?: string
+    value?: string
+    [key: string]: any
+  }
+}
+
+export interface ITextTreeSelectProps extends ITextProps {
+  data?: any[]
+  multiple?: boolean
+  treeNodeLabelProp?: string
+  /** option 字段映射，兼容 antd 命名的 value */
+  props?: {
+    value?: string
+    [key: string]: any
+  }
+}
+
+export interface ITextCascaderProps extends ITextProps {
+  options?: any[]
+  multiple?: boolean
+}
+
+export interface ITextFormatProps extends ITextProps {
+  format?: any
+}
+
 const useTextPrefixCls = (attrs: Record<string, any>) => usePrefixCls('form-text', { prefixCls: attrs.prefixCls })
 
-export const TextInput = defineComponent({
+export const TextInput = defineComponent<ITextInputProps>({
   name: 'TextInput',
   inheritAttrs: false,
   props: {
@@ -38,7 +82,7 @@ export const TextInput = defineComponent({
   },
 })
 
-export const TextInputNumber = defineComponent({
+export const TextInputNumber = defineComponent<ITextInputNumberProps>({
   name: 'TextInputNumber',
   inheritAttrs: false,
   props: {
@@ -68,7 +112,7 @@ export const TextInputNumber = defineComponent({
   },
 })
 
-export const TextSelect = defineComponent({
+export const TextSelect = defineComponent<ITextSelectProps>({
   name: 'TextSelect',
   inheritAttrs: false,
   props: {
@@ -136,7 +180,7 @@ export const TextSelect = defineComponent({
   },
 })
 
-export const TextTreeSelect = defineComponent({
+export const TextTreeSelect = defineComponent<ITextTreeSelectProps>({
   name: 'TextTreeSelect',
   inheritAttrs: false,
   props: {
@@ -198,7 +242,7 @@ export const TextTreeSelect = defineComponent({
   },
 })
 
-export const TextCascader = defineComponent({
+export const TextCascader = defineComponent<ITextCascaderProps>({
   name: 'TextCascader',
   inheritAttrs: false,
   props: {
@@ -258,7 +302,7 @@ const useFormatLabels = (props: any) => {
   }
 }
 
-export const TextDatePicker = defineComponent({
+export const TextDatePicker = defineComponent<ITextFormatProps>({
   name: 'TextDatePicker',
   inheritAttrs: false,
   props: {
@@ -273,7 +317,7 @@ export const TextDatePicker = defineComponent({
   },
 })
 
-export const TextDateRangePicker = defineComponent({
+export const TextDateRangePicker = defineComponent<ITextFormatProps>({
   name: 'TextDateRangePicker',
   inheritAttrs: false,
   props: {
@@ -292,7 +336,7 @@ export const TextDateRangePicker = defineComponent({
   },
 })
 
-export const TextTimePicker = defineComponent({
+export const TextTimePicker = defineComponent<ITextFormatProps>({
   name: 'TextTimePicker',
   inheritAttrs: false,
   props: {
@@ -311,7 +355,7 @@ export const TextTimePicker = defineComponent({
   },
 })
 
-export const TextTimeRangePicker = defineComponent({
+export const TextTimeRangePicker = defineComponent<ITextFormatProps>({
   name: 'TextTimeRangePicker',
   inheritAttrs: false,
   props: {
@@ -330,7 +374,7 @@ export const TextTimeRangePicker = defineComponent({
   },
 })
 
-export const Text = defineComponent({
+export const Text = defineComponent<ITextProps>({
   name: 'Text',
   inheritAttrs: false,
   props: {

@@ -1,6 +1,7 @@
 import type { ArrayField } from '@formvk/core'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElBadge, ElTabPane, ElTabs } from 'element-plus'
+import type { TabsPropsPublic } from 'element-plus'
 import { computed, defineComponent, ref } from 'vue'
 
 import { usePrefixCls } from '../../shared'
@@ -29,7 +30,7 @@ const FeedbackBadge = defineComponent({
   },
 })
 
-export const ArrayTabs = defineComponent({
+export const ArrayTabs = defineComponent<TabsPropsPublic & { prefixCls?: string }>({
   name: 'ArrayTabs',
   inheritAttrs: false,
   props: {

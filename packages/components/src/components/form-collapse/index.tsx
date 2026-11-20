@@ -3,6 +3,7 @@ import type { Schema, SchemaKey } from '@formvk/schema'
 import { toArr } from '@formvk/shared'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElBadge, ElCollapse, ElCollapseItem } from 'element-plus'
+import type { CollapsePropsPublic } from 'element-plus'
 import { computed, defineComponent, reactive } from 'vue'
 import type { PropType } from 'vue'
 
@@ -89,7 +90,9 @@ export const createFormCollapse = (defaultActiveKeys?: ActiveKeys): IFormCollaps
   return formCollapse
 }
 
-export const FormCollapse = defineComponent({
+export const FormCollapse = defineComponent<
+  Omit<CollapsePropsPublic, 'modelValue'> & IFormCollapseProps & { prefixCls?: string }
+>({
   name: 'FormCollapse',
   inheritAttrs: false,
   props: {

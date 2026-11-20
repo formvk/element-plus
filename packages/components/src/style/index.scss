@@ -1,11 +1,14 @@
 // formvk element-plus 桥接层样式
 // 组件本身尽量复用 Element Plus 的视觉，这里只补齐布局与桥接层结构类
 
-$prefix: 'formvk';
-$border-color: var(--el-border-color-lighter, #ebeef5);
-$text-color: var(--el-text-color-regular, #606266);
-$text-secondary: var(--el-text-color-secondary, #909399);
-$danger: var(--el-color-danger, #f56c6c);
+// Element Plus 的 namespace，与 ElConfigProvider 的 namespace 保持一致
+$namespace: 'el' !default;
+// 桥接层自身的类名前缀，跟随 Element Plus 的 namespace（默认 el-formvk）
+$prefix: '#{$namespace}-formvk' !default;
+$border-color: var(--#{$namespace}-border-color-lighter, #ebeef5);
+$text-color: var(--#{$namespace}-text-color-regular, #606266);
+$text-secondary: var(--#{$namespace}-text-color-secondary, #909399);
+$danger: var(--#{$namespace}-color-danger, #f56c6c);
 $gap: 8px;
 
 /* -------------------------------- Form Layout -------------------------------- */
@@ -102,16 +105,16 @@ $gap: 8px;
     flex: 1 1 0%;
     min-width: 0;
 
-    > .el-input,
-    > .el-select,
-    > .el-date-editor,
-    > .el-textarea,
-    > .el-input-number,
-    > .el-cascader,
-    > .el-tree-select,
-    > .el-upload,
-    > .el-switch,
-    > .el-slider {
+    > .#{$namespace}-input,
+    > .#{$namespace}-select,
+    > .#{$namespace}-date-editor,
+    > .#{$namespace}-textarea,
+    > .#{$namespace}-input-number,
+    > .#{$namespace}-cascader,
+    > .#{$namespace}-tree-select,
+    > .#{$namespace}-upload,
+    > .#{$namespace}-switch,
+    > .#{$namespace}-slider {
       width: 100%;
     }
   }
@@ -134,7 +137,7 @@ $gap: 8px;
 
     &-enter,
     &-enter-active {
-      animation: formvk-help-fade-in 0.24s ease;
+      animation: #{$prefix}-help-fade-in 0.24s ease;
     }
   }
 
@@ -154,8 +157,8 @@ $gap: 8px;
   }
 
   &-bordered-none {
-    .#{$prefix}-item-control-content-component > .el-input__wrapper,
-    .#{$prefix}-item-control-content-component > .el-select__wrapper {
+    .#{$prefix}-item-control-content-component > .#{$namespace}-input__wrapper,
+    .#{$prefix}-item-control-content-component > .#{$namespace}-select__wrapper {
       box-shadow: none;
       background: transparent;
       padding-left: 0;
@@ -167,11 +170,11 @@ $gap: 8px;
     border: 1px solid $border-color;
     border-radius: 6px;
     padding: 10px 12px;
-    background: var(--el-fill-color-blank, #fff);
+    background: var(--#{$namespace}-fill-color-blank, #fff);
 
     &-active {
-      border-color: var(--el-color-primary, #409eff);
-      box-shadow: 0 0 0 1px var(--el-color-primary-light-7, #c6e2ff);
+      border-color: var(--#{$namespace}-color-primary, #409eff);
+      box-shadow: 0 0 0 1px var(--#{$namespace}-color-primary-light-7, #c6e2ff);
     }
   }
 
@@ -297,7 +300,7 @@ $gap: 8px;
   }
 }
 
-@keyframes formvk-help-fade-in {
+@keyframes #{$prefix}-help-fade-in {
   from {
     opacity: 0;
     transform: translateY(-4px);
@@ -325,7 +328,7 @@ $gap: 8px;
   word-break: break-all;
 
   &-placeholder {
-    color: var(--el-text-color-placeholder, #a8abb2);
+    color: var(--#{$namespace}-text-color-placeholder, #a8abb2);
   }
 }
 
@@ -341,7 +344,7 @@ $gap: 8px;
   width: 100%;
   display: flex;
 
-  > .el-button {
+  > .#{$namespace}-button {
     width: 100%;
   }
 }
@@ -351,7 +354,7 @@ $gap: 8px;
   color: $text-secondary;
 
   &:hover {
-    color: var(--el-color-primary, #409eff);
+    color: var(--#{$namespace}-color-primary, #409eff);
   }
 }
 
@@ -415,7 +418,7 @@ $gap: 8px;
   flex-direction: column;
   gap: $gap;
 
-  .el-card {
+  .#{$namespace}-card {
     width: 100%;
   }
 
@@ -446,7 +449,7 @@ $gap: 8px;
 .#{$prefix}-array-tabs {
   width: 100%;
 
-  .el-tabs__content {
+  .#{$namespace}-tabs__content {
     overflow: visible;
   }
 
@@ -470,7 +473,7 @@ $gap: 8px;
   &-addition {
     width: 100%;
 
-    > .el-button {
+    > .#{$namespace}-button {
       width: 100%;
     }
   }
@@ -516,8 +519,8 @@ $gap: 8px;
 .#{$prefix}-upload-dragger {
   width: 100%;
 
-  .el-upload,
-  .el-upload-dragger {
+  .#{$namespace}-upload,
+  .#{$namespace}-upload-dragger {
     width: 100%;
   }
 }
@@ -549,7 +552,7 @@ $gap: 8px;
     flex: 0 0 auto;
 
     &:hover {
-      color: var(--el-color-primary, #409eff);
+      color: var(--#{$namespace}-color-primary, #409eff);
     }
   }
 }

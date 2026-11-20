@@ -47,7 +47,7 @@ const schema = createSchema({
 
 ## 拖拽排序
 
-内部使用 SortableJS 作为排序容器，拖拽手柄选择器为 `.formvk-array-base-sort-handle`。在数组项 schema 中声明 `SortHandle` 即可拖拽排序，排序结束后通过 `field.move` 写回字段值；`Index` 用于展示序号。未声明 `SortHandle` 时数组项不可拖拽。
+内部使用 SortableJS 作为排序容器，拖拽手柄选择器为 `.el-formvk-array-base-sort-handle`。在数组项 schema 中声明 `SortHandle` 即可拖拽排序，排序结束后通过 `field.move` 写回字段值；`Index` 用于展示序号。未声明 `SortHandle` 时数组项不可拖拽。
 
 ## 注意事项
 

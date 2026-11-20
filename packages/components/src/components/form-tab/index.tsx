@@ -2,6 +2,7 @@ import type { GeneralField } from '@formvk/core'
 import type { Schema, SchemaKey } from '@formvk/schema'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElBadge, ElTabPane, ElTabs } from 'element-plus'
+import type { TabsPropsPublic } from 'element-plus'
 import { computed, defineComponent, reactive } from 'vue'
 import type { PropType } from 'vue'
 
@@ -85,7 +86,7 @@ export const createFormTab = (defaultActiveKey?: string): IFormTab => {
   return formTab
 }
 
-export const FormTab = defineComponent({
+export const FormTab = defineComponent<TabsPropsPublic & IFormTabProps & { prefixCls?: string }>({
   name: 'FormTab',
   inheritAttrs: false,
   props: {

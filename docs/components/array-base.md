@@ -98,7 +98,7 @@ f.Copy({
 
 ## 拖拽排序
 
-`SortHandle` 渲染的按钮带有 `formvk-array-base-sort-handle` 类名。`ArrayItems` 与 `ArrayTable` 内部基于 SortableJS 监听该类名作为拖拽手柄，在数组项 schema 中声明 `SortHandle` 即可启用排序；未声明时不可拖拽。
+`SortHandle` 渲染的按钮带有 `el-formvk-array-base-sort-handle` 类名。`ArrayItems` 与 `ArrayTable` 内部基于 SortableJS 监听该类名作为拖拽手柄，在数组项 schema 中声明 `SortHandle` 即可启用排序；未声明时不可拖拽。
 
 ## 自定义数组组件
 

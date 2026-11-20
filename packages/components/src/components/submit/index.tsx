@@ -1,6 +1,7 @@
 import type { IFormFeedback } from '@formvk/core'
 import { useParentForm } from '@formvk/vue'
 import { ElButton } from 'element-plus'
+import type { ButtonProps } from 'element-plus'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
@@ -12,7 +13,7 @@ export interface ISubmitProps {
   loading?: boolean
 }
 
-export const Submit = defineComponent({
+export const Submit = defineComponent<ButtonProps & ISubmitProps>({
   name: 'Submit',
   inheritAttrs: false,
   props: {

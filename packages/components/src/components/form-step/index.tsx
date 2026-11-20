@@ -2,6 +2,7 @@ import type { Form, VoidField } from '@formvk/core'
 import type { Schema, SchemaKey } from '@formvk/schema'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElStep, ElSteps } from 'element-plus'
+import type { StepsPropsPublic } from 'element-plus'
 import { computed, defineComponent, h, reactive, watchEffect } from 'vue'
 import type { CSSProperties, PropType } from 'vue'
 
@@ -105,7 +106,7 @@ export const createFormStep = (defaultCurrent = 0): IFormStep => {
   return formStep
 }
 
-export const FormStep = defineComponent({
+export const FormStep = defineComponent<StepsPropsPublic & IFormStepProps & { prefixCls?: string }>({
   name: 'FormStep',
   inheritAttrs: false,
   props: {
