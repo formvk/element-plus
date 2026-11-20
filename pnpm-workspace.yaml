@@ -1,0 +1,30 @@
+packages:
+  - 'packages/*'
+overrides:
+  # @formvk/reactive 依赖 @vue/reactivity，需与 Vue 运行时共用同一份实现，
+  # 否则字段变更无法触发 Vue 组件的依赖收集与重渲染
+  '@vue/reactivity': ^3.5.44
+catalog:
+  '@formvk/core': ~1.2.0-beta.3
+  '@formvk/models': ~1.2.0-beta.3
+  '@formvk/react': ~1.2.0-beta.3
+  '@formvk/reactive': ~1.2.0-beta.3
+  '@formvk/reactive-react': ~1.2.0-beta.3
+  '@formvk/schema': ~1.2.0-beta.3
+  '@formvk/shared': ~1.2.0-beta.3
+  '@formvk/vue': ~1.2.0-beta.3
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  nx: true
+minimumReleaseAgeExclude:
+  - '@formvk/core@1.2.0-beta.3'
+  - '@formvk/models@1.2.0-beta.3'
+  - '@formvk/path@1.2.0-beta.3'
+  - '@formvk/react@1.2.0-beta.3'
+  - '@formvk/reactive-react@1.2.0-beta.3'
+  - '@formvk/reactive@1.2.0-beta.3'
+  - '@formvk/schema@1.2.0-beta.3'
+  - '@formvk/shared@1.2.0-beta.3'
+  - '@formvk/vue@1.2.0-beta.3'
+  - '@formvk/validator@1.2.0-beta.3'

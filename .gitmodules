@@ -1,0 +1,3 @@
+[submodule "vendor/formily-element-plus"]
+	path = vendor/formily-element-plus
+	url = https://github.com/formilyjs/element-plus.git

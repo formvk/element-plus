@@ -1,0 +1,67 @@
+{
+  "name": "@formvk/element-plus-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Formvk Element Plus component bridge monorepo",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm --filter @formvk/element-plus build",
+    "dev": "pnpm --filter @formvk/element-plus dev",
+    "typecheck": "pnpm --filter @formvk/element-plus typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "preversion": "pnpm install --frozen-lockfile && pnpm build && pnpm exec oxlint --deny-warnings && pnpm format:check && pnpm exec vitest run && pnpm docs:build",
+    "version:release": "lerna version",
+    "version:alpha": "lerna version --conventional-prerelease --preid alpha",
+    "version:beta": "lerna version --conventional-prerelease --preid beta",
+    "version:rc": "lerna version --conventional-prerelease --preid rc",
+    "version:exit-pre": "lerna version --conventional-graduate",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@formvk/core": "catalog:",
+    "@formvk/models": "catalog:",
+    "@formvk/schema": "catalog:",
+    "@formvk/vue": "catalog:",
+    "@types/node": "^24.19.2",
+    "@vitejs/plugin-vue": "^6.0.11",
+    "@vitejs/plugin-vue-jsx": "^5.1.6",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@vue/test-utils": "^2.6.0",
+    "dayjs": "^1.11.23",
+    "element-plus": "^2.14.7",
+    "happy-dom": "^21.0.4",
+    "husky": "^9.1.7",
+    "lerna": "^10.1.1",
+    "lint-staged": "^17.6.1",
+    "oxfmt": "^0.78.0",
+    "oxlint": "^1.94.0",
+    "sass": "^1.108.2",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.8",
+    "vitepress": "^2.0.0-alpha.21",
+    "vitepress-demo-plugin": "^1.8.0",
+    "vitest": "^5.1.1",
+    "vue": "^3.5.44"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts,vue}": [
+      "oxlint --fix --no-error-on-unmatched-pattern",
+      "oxfmt --no-error-on-unmatched-pattern"
+    ],
+    "*.{json,jsonc,md,mdx,css,less,scss,html,yml,yaml}": "oxfmt --no-error-on-unmatched-pattern"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "packageManager": "pnpm@12.21.0"
+}

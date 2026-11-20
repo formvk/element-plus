@@ -1,0 +1,68 @@
+{
+  "name": "@formvk/element-plus",
+  "version": "1.0.0-beta.1",
+  "description": "Element Plus component bridge for Formvk",
+  "keywords": [
+    "bridge",
+    "element-plus",
+    "form",
+    "formvk",
+    "vue"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@formvk/core": "catalog:",
+    "@formvk/models": "catalog:",
+    "@formvk/schema": "catalog:",
+    "@formvk/shared": "catalog:",
+    "@formvk/vue": "catalog:",
+    "dayjs": "^1.11.23",
+    "sortablejs": "^1.15.7"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.60.1",
+    "@vitejs/plugin-vue": "^6.0.11",
+    "@vitejs/plugin-vue-jsx": "^5.1.6",
+    "@vue/test-utils": "^2.6.0",
+    "element-plus": "^2.14.7",
+    "happy-dom": "^21.0.4",
+    "sass": "^1.108.2",
+    "vite": "^8.3.8",
+    "vite-plugin-dts": "^5.1.2",
+    "vue": "^3.5.44"
+  },
+  "peerDependencies": {
+    "element-plus": "^2.14.0",
+    "vue": "^3.5.0"
+  }
+}
