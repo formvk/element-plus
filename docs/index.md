@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: 内核文档
       link: https://formvk.github.io/core/
+    - theme: alt
+      text: GitHub
+      link: https://github.com/formvk/element-plus
 
 features:
   - title: Schema 驱动
