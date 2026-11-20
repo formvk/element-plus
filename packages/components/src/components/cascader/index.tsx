@@ -3,7 +3,7 @@ import { ElCascader } from 'element-plus'
 
 import { TextCascader } from '../preview-text'
 
-export const Cascader = connect(
+export const Cascader: typeof ElCascader = connect(
   ElCascader,
   mapProps({
     dataSource: 'options',

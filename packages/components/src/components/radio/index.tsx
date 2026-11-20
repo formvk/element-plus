@@ -3,9 +3,9 @@ import { ElRadio, ElRadioGroup } from 'element-plus'
 
 import { TextSelect } from '../preview-text'
 
-export const InternalRadio = connect(ElRadio)
+export const InternalRadio: typeof ElRadio = connect(ElRadio)
 
-export const RadioGroup = connect(
+export const RadioGroup: typeof ElRadioGroup = connect(
   ElRadioGroup,
   mapProps({
     dataSource: 'options',
@@ -13,4 +13,4 @@ export const RadioGroup = connect(
   mapReadPretty(TextSelect)
 )
 
-export const Radio = InternalRadio
+export const Radio: typeof ElRadio = InternalRadio

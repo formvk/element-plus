@@ -305,6 +305,9 @@ importers:
       '@microsoft/api-extractor':
         specifier: ^7.60.1
         version: 7.60.1(@types/node@24.19.2)
+      '@types/sortablejs':
+        specifier: ^1.15.9
+        version: 1.15.9
       '@vitejs/plugin-vue':
         specifier: ^6.0.11
         version: 6.0.11(vite@8.3.8(@types/node@24.19.2)(sass@1.108.2)(yaml@2.9.1))(vue@3.5.45(typescript@6.0.3))
@@ -1570,6 +1573,9 @@ packages:
 
   '@types/parse-path@7.0.3':
     resolution: {integrity: sha512-LriObC2+KYZD3FzCrgWGv/qufdUy4eXrxcLgQMfYXgPbLIecKIsVBaQgUPmxSSLcjmYbDTQbMgr6qr6l/eb7Bg==}
+
+  '@types/sortablejs@1.15.9':
+    resolution: {integrity: sha512-7HP+rZGE2p886PKV9c9OJzLBI6BBJu1O7lJGYnPyG3fS4/duUCcngkNCjsLwIMV+WMqANe3tt4irrXHSIe68OQ==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -5078,6 +5084,8 @@ snapshots:
       undici-types: 7.24.6
 
   '@types/parse-path@7.0.3': {}
+
+  '@types/sortablejs@1.15.9': {}
 
   '@types/unist@3.0.3': {}
 

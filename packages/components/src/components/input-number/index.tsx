@@ -5,4 +5,4 @@ import { TextInputNumber } from '../preview-text'
 
 export type InputNumberRef = InstanceType<typeof ElInputNumber>
 
-export const InputNumber = connect(ElInputNumber, mapReadPretty(TextInputNumber))
+export const InputNumber: typeof ElInputNumber = connect(ElInputNumber, mapReadPretty(TextInputNumber))

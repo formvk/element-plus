@@ -1,3 +1,4 @@
+import 'vue'
 declare module 'vue' {
   // GlobalComponents for Volar
   export interface GlobalComponents {
