@@ -26,7 +26,7 @@
 
 | 子组件 | 说明 |
 | --- | --- |
-| `CollapsePanel` | 面板，`componentProps` 支持 `key`、`header` / `title`、`disabled` 等属性 |
+| `CollapsePanel` | 面板，`componentProps` 支持 `key`、`title`、`disabled` 等属性 |
 
 ### 受控实例
 
@@ -51,7 +51,7 @@ const schema = createSchema({
     componentProps: { formCollapse: collapse, accordion: true },
     properties: {
       base: f.CollapsePanel({
-        componentProps: { key: 'base', header: '基本信息' },
+        componentProps: { key: 'base', title: '基本信息' },
         properties: {
           name: f.Input({ title: '姓名' }),
         },

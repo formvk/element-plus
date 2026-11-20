@@ -9,7 +9,7 @@ const toClassName = (value: ClassValue): string => {
     .join(' ')
 }
 
-/** 轻量 classnames 实现，行为与 antd 版本保持一致的部分即可满足组件场景 */
+/** 轻量 classnames 实现，覆盖组件场景的字符串 / 数组 / 对象组合 */
 export const cls = (...args: ClassValue[]): string => args.map(toClassName).filter(Boolean).join(' ')
 
 export default cls

@@ -78,7 +78,7 @@ pnpm add -D unplugin-vue-components
 // vite.config.ts
 import { defineConfig } from 'vite'
 import Components from 'unplugin-vue-components/vite'
-import { FormvkElementPlusResolver } from '@formvk/element-plus'
+import { FormvkElementPlusResolver } from '@formvk/element-plus/resolver'
 
 export default defineConfig({
   plugins: [
@@ -105,6 +105,22 @@ createApp(App).use(FormvkElementPlus).mount('#app')
 ```
 
 全量注册只包含 `containers` 目录下的容器组件；字段、布局与数组组件由 schema 内部解析，不参与注册。
+
+## Volar 支持
+
+使用 Volar 时，全局注册的组件默认无法获得模板类型提示。可以在 `tsconfig.json` 中引入本包提供的全局组件类型：
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@formvk/element-plus/global"]
+  }
+}
+```
+
+引入后，`SchemaForm`、`CrudTable`、`DataTable` 等全局容器组件在模板中会获得完整的 props 与事件类型提示。该方式仅影响类型，不会产生运行时行为。
+
+如果使用 `unplugin-vue-components` 按需导入，插件会自动生成 `components.d.ts`，无需再引入此类型。
 
 ## 下一步
 

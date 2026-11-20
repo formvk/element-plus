@@ -11,6 +11,6 @@ export const CheckboxGroup = connect(
     dataSource: 'options',
   }),
   mapReadPretty(TextSelect, {
-    mode: 'tags',
+    multiple: true,
   })
 )

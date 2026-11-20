@@ -46,7 +46,7 @@ const schema = createSchema({
 
 ## 面板标题
 
-- 面板标题优先取数组项 `componentProps` 的 `header` / `title`，其次是数组项 Schema 的 `header` / `title`，最后回退到数组字段的 `title`。
+- 面板标题优先取数组项 `componentProps` 的 `title`，其次是数组项 Schema 的 `title`，最后回退到数组字段的 `title`。
 - 数组项的 `componentProps.disabled` 或 Schema 的 `disabled` 可禁用单个面板。
 - `Index` 渲染在标题文案之前；字段校验失败时，标题会包裹 `ElBadge` 并展示错误数量。
 - 新增面板后会自动展开新面板：配置了 `recordKey` 时使用新项的 key，否则按索引插入并顺延已有 key。

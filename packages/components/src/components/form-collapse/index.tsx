@@ -121,7 +121,7 @@ export const FormCollapse = defineComponent<
 
     const badgedHeader = (key: SchemaKey, panelProps: any) => {
       const currentField = field.value
-      const header = panelProps.title ?? panelProps.header
+      const header = panelProps.title
       if (!currentField) return header
       const errors = currentField.form.queryFeedbacks({
         type: 'error',

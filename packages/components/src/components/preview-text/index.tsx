@@ -30,24 +30,12 @@ export interface ITextInputNumberProps extends ITextInputProps {
 export interface ITextSelectProps extends ITextProps {
   options?: any[]
   multiple?: boolean
-  mode?: string
-  /** option 字段映射，兼容 antd 命名的 label / value */
-  props?: {
-    label?: string
-    value?: string
-    [key: string]: any
-  }
 }
 
 export interface ITextTreeSelectProps extends ITextProps {
   data?: any[]
   multiple?: boolean
   treeNodeLabelProp?: string
-  /** option 字段映射，兼容 antd 命名的 value */
-  props?: {
-    value?: string
-    [key: string]: any
-  }
 }
 
 export interface ITextCascaderProps extends ITextProps {
@@ -119,7 +107,6 @@ export const TextSelect = defineComponent<ITextSelectProps>({
     modelValue: { type: null as unknown as PropType<any>, default: undefined },
     options: Array as PropType<any[]>,
     multiple: Boolean,
-    mode: String,
   },
   setup(props, { attrs }) {
     const field = useField<Field>()
@@ -135,7 +122,7 @@ export const TextSelect = defineComponent<ITextSelectProps>({
 
     const getSelected = () => {
       const value = props.modelValue
-      const multiple = props.multiple || props.mode === 'multiple' || props.mode === 'tags'
+      const multiple = props.multiple
       if (multiple) {
         return isArr(value) ? value : []
       }
@@ -143,11 +130,9 @@ export const TextSelect = defineComponent<ITextSelectProps>({
     }
 
     const getLabel = (target: any) => {
-      const labelKey = (attrs as any).props?.label ?? 'label'
-      const valueKey = (attrs as any).props?.value ?? 'value'
       const targetValue = typeof target === 'object' && target !== null ? target.value : target
       return (
-        dataSource.value?.find(item => item[valueKey] == targetValue)?.[labelKey] ||
+        dataSource.value?.find(item => item.value == targetValue)?.label ||
         (typeof target === 'object' && target !== null ? target.label : target) ||
         placeholder.value
       )
@@ -210,10 +195,9 @@ export const TextTreeSelect = defineComponent<ITextTreeSelectProps>({
     }
 
     const findLabel = (value: any, treeData: any[]): any => {
-      const valueKey = (attrs as any).props?.value ?? 'value'
       for (let i = 0; i < treeData?.length; i++) {
         const item = treeData[i]
-        if (item?.[valueKey] === value) {
+        if (item?.value === value) {
           return item?.label ?? item[props.treeNodeLabelProp as string]
         } else {
           const childLabel = findLabel(value, item?.children)

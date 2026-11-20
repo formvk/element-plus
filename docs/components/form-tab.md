@@ -24,7 +24,7 @@
 
 | 子组件 | 说明 |
 | --- | --- |
-| `TabPane` | 标签页面板，`componentProps` 支持 `key`、`tab`、`disabled` 等属性 |
+| `TabPane` | 标签页面板，`componentProps` 支持 `key`、`label`、`disabled` 等属性 |
 
 ### 受控实例
 
@@ -48,7 +48,7 @@ const schema = createSchema({
     componentProps: { formTab },
     properties: {
       user: f.TabPane({
-        componentProps: { key: 'user', tab: '基本信息' },
+        componentProps: { key: 'user', label: '基本信息' },
         properties: {
           name: f.Input({ title: '姓名' }),
         },

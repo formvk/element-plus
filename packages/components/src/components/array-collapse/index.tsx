@@ -161,12 +161,7 @@ export const ArrayCollapse = defineComponent<CollapseProps & IArrayCollapseProps
               if (!items) return []
               const panelProps = currentField.query(`${currentField.address}.${index}`).get('componentProps')
               const panelSchemaProps = items.componentProps ?? {}
-              const headerText =
-                panelProps?.header ??
-                panelProps?.title ??
-                panelSchemaProps.header ??
-                panelSchemaProps.title ??
-                currentField.title
+              const headerText = panelProps?.title ?? panelSchemaProps.title ?? currentField.title
               return [
                 <ElCollapseItem
                   key={String(currentField.getRecordKey(index))}

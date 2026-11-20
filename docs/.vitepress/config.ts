@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { defineConfig } from 'vitepress'
 import { vitepressDemoPlugin } from 'vitepress-demo-plugin/markdown'
+import llmstxt from 'vitepress-plugin-llms'
 
 const rootDir = fileURLToPath(new URL('../..', import.meta.url))
 
@@ -127,7 +128,7 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [vueJsx()],
+    plugins: [vueJsx(), llmstxt()],
     resolve: {
       alias: {
         '@formvk/element-plus': path.resolve(rootDir, 'packages/components/src/index.ts'),

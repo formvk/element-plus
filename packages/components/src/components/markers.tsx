@@ -4,8 +4,6 @@ import type { PropType } from 'vue'
 export type ICollapsePanelProps = {
   /** 面板标题 */
   title?: string
-  /** 兼容 antd 命名的面板标题 */
-  header?: string
   /** 面板标识 */
   key?: string | number
   name?: string | number
@@ -26,8 +24,7 @@ export interface ITabPaneProps {
   /** 面板标识 */
   key: string | number
   name?: string | number
-  /** 兼容 antd 命名的标签文案 */
-  tab?: any
+  /** 标签文案 */
   label?: string
   disabled?: boolean
 }
@@ -51,7 +48,6 @@ export const CollapsePanel = defineComponent({
   inheritAttrs: false,
   props: {
     title: String,
-    header: String,
     name: [String, Number] as PropType<string | number>,
     disabled: Boolean,
   },
@@ -85,7 +81,6 @@ export const TabPane = defineComponent({
   name: 'TabPane',
   inheritAttrs: false,
   props: {
-    tab: { type: null as unknown as PropType<any>, default: undefined },
     label: String,
     name: [String, Number] as PropType<string | number>,
     disabled: Boolean,

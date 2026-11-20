@@ -13,17 +13,12 @@ interface ISize {
 
 // 纯函数，故不使用 use 前缀命名
 const getSize: ISize = (fieldSize = 'default', searchSize, tableSize) => {
-  // antd 的 middle / default 在 Element Plus 中统一为 default
   const fieldSizeMap: Record<string, { searchSize: SizeType; tableSize: SizeType }> = {
     small: {
       searchSize: 'small',
       tableSize: 'small',
     },
     default: {
-      searchSize: 'default',
-      tableSize: 'default',
-    },
-    middle: {
       searchSize: 'default',
       tableSize: 'default',
     },

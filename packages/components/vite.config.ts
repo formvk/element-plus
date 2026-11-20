@@ -33,9 +33,12 @@ export default defineConfig({
     sourcemap: true,
     minify: false,
     lib: {
-      entry: resolve(rootDir, 'src/index.ts'),
+      entry: {
+        index: resolve(rootDir, 'src/index.ts'),
+        resolver: resolve(rootDir, 'src/resolver.ts'),
+      },
       formats: ['es'],
-      fileName: 'index',
+      fileName: (_format, entryName) => `${entryName}.js`,
       cssFileName: 'style',
     },
     rollupOptions: {

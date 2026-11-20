@@ -22,7 +22,7 @@ export interface IFormTabProps {
 
 interface IFeedbackBadgeProps {
   name: SchemaKey
-  tab: any
+  label: any
 }
 
 const parseTabs = (field: GeneralField | undefined, currentSchema: Schema | undefined) => {
@@ -52,13 +52,13 @@ const FeedbackBadge = defineComponent({
   inheritAttrs: false,
   props: {
     name: { type: [String, Number] as PropType<SchemaKey>, required: true },
-    tab: { type: null as unknown as PropType<any>, default: undefined },
+    label: { type: null as unknown as PropType<any>, default: undefined },
   },
   setup(props) {
     const field = useField()
     return () => {
       const currentField = field.value
-      if (!currentField) return props.tab
+      if (!currentField) return props.label
       const errors = currentField.form.queryFeedbacks({
         type: 'error',
         address: `${currentField.address.concat(props.name)}.*`,
@@ -66,11 +66,11 @@ const FeedbackBadge = defineComponent({
       if (errors.length) {
         return (
           <ElBadge type="danger" class="errors-badge" value={errors.length}>
-            <span>{props.tab}</span>
+            <span>{props.label}</span>
           </ElBadge>
         )
       }
-      return props.tab
+      return props.label
     }
   },
 })
@@ -124,7 +124,7 @@ export const FormTab = defineComponent<TabsPropsPublic & IFormTabProps & { prefi
             lazy={false}
           >
             {{
-              label: () => <FeedbackBadge name={name} tab={tabProps.tab ?? tabProps.label} />,
+              label: () => <FeedbackBadge name={name} label={tabProps.label} />,
               default: () => <RecursionField schema={tabSchema} name={name} />,
             }}
           </ElTabPane>

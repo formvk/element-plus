@@ -21,7 +21,7 @@ const schema = createSchema({
   tabs: f.FormTab({
     properties: {
       user: f.TabPane({
-        componentProps: { key: 'user', tab: '基本信息' },
+        componentProps: { key: 'user', label: '基本信息' },
         properties: {
           name: f.Input({ title: '姓名' }),
           email: f.Input({ title: '邮箱' }),
@@ -29,7 +29,7 @@ const schema = createSchema({
         },
       }),
       security: f.TabPane({
-        componentProps: { key: 'security', tab: '账号安全' },
+        componentProps: { key: 'security', label: '账号安全' },
         properties: {
           password: f.Password({ title: '密码' }),
           confirm: f.Password({ title: '确认密码' }),

@@ -34,14 +34,14 @@ const schema = createSchema({
     },
     properties: {
       base: f.CollapsePanel({
-        componentProps: { key: 'base', header: '基本信息' },
+        componentProps: { key: 'base', title: '基本信息' },
         properties: {
           name: f.Input({ title: '姓名' }),
           email: f.Input({ title: '邮箱' }),
         },
       }),
       contact: f.CollapsePanel({
-        componentProps: { key: 'contact', header: '联系方式' },
+        componentProps: { key: 'contact', title: '联系方式' },
         properties: {
           mobile: f.Input({ title: '手机号' }),
           address: f.Input({ title: '地址' }),
