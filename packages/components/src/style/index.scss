@@ -1,14 +1,27 @@
 // formvk element-plus 桥接层样式
 // 组件本身尽量复用 Element Plus 的视觉，这里只补齐布局与桥接层结构类
 
+@use 'sass:math';
+
 // Element Plus 的 namespace，与 ElConfigProvider 的 namespace 保持一致
 $namespace: 'el' !default;
 // 桥接层自身的类名前缀，跟随 Element Plus 的 namespace（默认 el-formvk）
 $prefix: '#{$namespace}-formvk' !default;
 $border-color: var(--#{$namespace}-border-color-lighter, #ebeef5);
+$border-hover: var(--#{$namespace}-border-color-hover, #c0c4cc);
 $text-color: var(--#{$namespace}-text-color-regular, #606266);
+$text-heading: var(--#{$namespace}-text-color-primary, #303133);
 $text-secondary: var(--#{$namespace}-text-color-secondary, #909399);
+$fill-blank: var(--#{$namespace}-fill-color-blank, #fff);
+$primary: var(--#{$namespace}-color-primary, #409eff);
+$primary-light-7: var(--#{$namespace}-color-primary-light-7, #c6e2ff);
+$primary-light-9: var(--#{$namespace}-color-primary-light-9, #ecf5ff);
+$success: var(--#{$namespace}-color-success, #67c23a);
+$warning: var(--#{$namespace}-color-warning, #e6a23c);
+$warning-light-9: var(--#{$namespace}-color-warning-light-9, #fdf6ec);
 $danger: var(--#{$namespace}-color-danger, #f56c6c);
+$radius: var(--#{$namespace}-border-radius-base, 4px);
+$line-height: 1.5715;
 $gap: 8px;
 
 /* -------------------------------- Form Layout -------------------------------- */
@@ -16,7 +29,7 @@ $gap: 8px;
 .#{$prefix}-layout {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
 }
 
 .#{$prefix}-layout-inline {
@@ -32,78 +45,141 @@ $gap: 8px;
 
 /* -------------------------------- Form Item -------------------------------- */
 
-.#{$prefix}-item {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: $gap;
+@mixin form-item-control-border($color) {
+  .#{$namespace}-input__wrapper,
+  .#{$namespace}-select__wrapper,
+  .#{$namespace}-textarea__inner {
+    box-shadow: 0 0 0 1px $color inset !important;
+  }
+}
 
-  &-layout-vertical {
-    flex-direction: column;
-    gap: 4px;
+@mixin form-item-control-borderless {
+  .#{$namespace}-input__wrapper,
+  .#{$namespace}-select__wrapper,
+  .#{$namespace}-textarea__inner {
+    box-shadow: none !important;
   }
 
-  &-label-wrap > .#{$prefix}-item-label {
-    white-space: normal;
+  .#{$namespace}-input-number__increase,
+  .#{$namespace}-input-number__decrease {
+    border: none !important;
+  }
+}
+
+.#{$prefix}-item {
+  position: relative;
+  display: flex;
+  margin-bottom: 24px;
+  font-size: 14px;
+
+  &-layout-vertical {
+    display: block;
+
+    > .#{$prefix}-item-label {
+      min-height: 30px;
+      padding: 0 0 8px;
+      line-height: $line-height;
+
+      .#{$prefix}-item-label-content {
+        white-space: initial;
+        text-align: start;
+      }
+    }
   }
 
   &-label {
+    position: relative;
     display: flex;
-    align-items: center;
     flex: 0 0 auto;
-    min-height: 32px;
+    align-items: center;
+    min-height: 30px;
     line-height: 32px;
-    color: $text-color;
-    font-size: 14px;
-    white-space: nowrap;
+    color: $text-heading;
+
+    label {
+      cursor: text;
+    }
+
+    &-content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      label {
+        white-space: nowrap;
+      }
+    }
 
     &-tooltip {
       cursor: help;
+
+      * {
+        cursor: help;
+      }
+
+      label {
+        border-bottom: 1px dashed currentColor;
+      }
     }
 
     &-tooltip-icon {
       display: inline-flex;
       align-items: center;
-      margin-left: 4px;
+      max-height: 32px;
+      margin-inline-start: 4px;
       color: $text-secondary;
       cursor: help;
-      font-size: 13px;
+
+      span {
+        display: inline-block;
+      }
     }
   }
 
-  &-colon {
-    margin-left: 2px;
+  &-asterisk {
+    display: inline-block;
+    margin-inline-end: 4px;
+    color: $danger;
+    font-family: SimSun, sans-serif;
   }
 
-  &-asterisk {
-    color: $danger;
-    margin-right: 2px;
+  &-colon {
+    margin-inline-start: 2px;
+    margin-inline-end: 8px;
+  }
+
+  &-label-wrap {
+    > .#{$prefix}-item-label label {
+      white-space: pre-line;
+      word-break: break-all;
+    }
   }
 
   &-control {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    gap: 2px;
-    flex: 1 1 auto;
     min-width: 0;
+    max-width: 100%;
   }
 
   &-control-wrap {
-    .#{$prefix}-item-control-content {
-      flex-wrap: wrap;
+    > .#{$prefix}-item-control {
+      white-space: pre-line;
+      word-break: break-all;
     }
   }
 
   &-control-content {
     display: flex;
     align-items: center;
-    gap: $gap;
   }
 
   &-control-content-component {
     position: relative;
-    flex: 1 1 0%;
-    min-width: 0;
+    width: 100%;
+    min-height: 30px;
+    line-height: 30px;
 
     > .#{$namespace}-input,
     > .#{$namespace}-select,
@@ -117,12 +193,36 @@ $gap: 8px;
     > .#{$namespace}-slider {
       width: 100%;
     }
+
+    &-has-feedback-icon {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      padding-inline-end: 8px;
+      border: 1px solid $border-color;
+      border-radius: $radius;
+      outline: none;
+      transition: all 0.3s;
+      touch-action: manipulation;
+
+      @include form-item-control-borderless;
+    }
   }
 
   &-addon-before,
   &-addon-after {
-    flex: 0 0 auto;
-    color: $text-secondary;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    min-height: 32px;
+  }
+
+  &-addon-before {
+    margin-inline-end: 8px;
+  }
+
+  &-addon-after {
+    margin-inline-start: 8px;
   }
 
   &-indent {
@@ -130,184 +230,345 @@ $gap: 8px;
     width: 16px;
   }
 
-  &-help {
-    font-size: 12px;
-    line-height: 20px;
+  &-help,
+  &-extra {
+    clear: both;
+    min-height: 22px;
+    padding-top: 0;
     color: $text-secondary;
-
-    &-enter,
-    &-enter-active {
-      animation: #{$prefix}-help-fade-in 0.24s ease;
-    }
+    line-height: 22px;
+    transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   &-error-help {
-    color: $danger;
+    color: $danger !important;
   }
 
-  &-extra {
-    font-size: 12px;
-    color: $text-secondary;
+  &-warning-help {
+    color: $warning !important;
+  }
+
+  &-success-help {
+    color: $success !important;
   }
 
   &-feedback-icon {
     display: inline-flex;
-    align-items: center;
     flex: 0 0 auto;
+    align-items: center;
   }
 
-  &-bordered-none {
-    .#{$prefix}-item-control-content-component > .#{$namespace}-input__wrapper,
-    .#{$prefix}-item-control-content-component > .#{$namespace}-select__wrapper {
-      box-shadow: none;
-      background: transparent;
-      padding-left: 0;
-      padding-right: 0;
+  &-feedback-layout-terse {
+    margin-bottom: 8px;
+
+    &.#{$prefix}-item-feedback-has-text:not(.#{$prefix}-item-inset) {
+      margin-bottom: 0;
     }
   }
 
-  &-inset {
-    border: 1px solid $border-color;
-    border-radius: 6px;
-    padding: 10px 12px;
-    background: var(--#{$namespace}-fill-color-blank, #fff);
+  &-feedback-layout-loose {
+    margin-bottom: 24px;
 
-    &-active {
-      border-color: var(--#{$namespace}-color-primary, #409eff);
-      box-shadow: 0 0 0 1px var(--#{$namespace}-color-primary-light-7, #c6e2ff);
+    &.#{$prefix}-item-feedback-has-text:not(.#{$prefix}-item-inset) {
+      margin-bottom: calc(24px - 22px);
     }
   }
 
-  &-size-small > .#{$prefix}-item-label {
-    min-height: 24px;
-    line-height: 24px;
-    font-size: 13px;
+  &-feedback-layout-none {
+    margin-bottom: 0;
+
+    &.#{$prefix}-item-feedback-has-text:not(.#{$prefix}-item-inset) {
+      margin-bottom: 0;
+    }
   }
 
-  &-size-large > .#{$prefix}-item-label {
-    min-height: 40px;
-    line-height: 40px;
-    font-size: 15px;
+  &-feedback-layout-popover {
+    margin-bottom: 8px;
+  }
+
+  &-success {
+    @include form-item-control-border($success);
+  }
+
+  &-warning {
+    @include form-item-control-border($warning);
+
+    .#{$namespace}-select__wrapper,
+    .#{$namespace}-input-number .#{$namespace}-input__wrapper,
+    .#{$namespace}-date-editor .#{$namespace}-input__wrapper {
+      background-color: $warning-light-9;
+    }
+  }
+
+  &-error {
+    @include form-item-control-border($danger);
+  }
+
+  &-control-align-left > .#{$prefix}-item-control > .#{$prefix}-item-control-content {
+    justify-content: flex-start;
+  }
+
+  &-control-align-right > .#{$prefix}-item-control > .#{$prefix}-item-control-content {
+    justify-content: flex-end;
   }
 
   &-fullness {
-    width: 100%;
+    > .#{$prefix}-item-control
+      > .#{$prefix}-item-control-content
+      > .#{$prefix}-item-control-content-component
+      > *:first-child {
+      width: 100%;
+    }
   }
 
-  &-item-col-1 {
-    flex: 0 0 4.1667%;
-    max-width: 4.1667%;
+  &-bordered-none {
+    @include form-item-control-borderless;
   }
-  &-item-col-2 {
-    flex: 0 0 8.3333%;
-    max-width: 8.3333%;
+
+  &-inset {
+    padding-inline-start: 12px;
+    border: 1px solid $border-color;
+    border-radius: $radius;
+    transition: 0.3s all;
+
+    @include form-item-control-borderless;
+
+    &:hover {
+      border-color: $border-hover;
+    }
+
+    &-active {
+      border-color: $primary;
+      box-shadow: 0 0 0 2px $primary-light-9;
+    }
   }
-  &-item-col-3 {
-    flex: 0 0 12.5%;
-    max-width: 12.5%;
+
+  &-active {
+    .#{$prefix}-item-control-content-component-has-feedback-icon {
+      border-color: $primary;
+      box-shadow: 0 0 0 2px $primary-light-9;
+    }
+
+    .#{$namespace}-input__wrapper,
+    .#{$namespace}-select__wrapper {
+      box-shadow: 0 0 0 1px $primary inset !important;
+    }
   }
-  &-item-col-4 {
-    flex: 0 0 16.6667%;
-    max-width: 16.6667%;
+
+  &:hover {
+    .#{$prefix}-item-control-content-component-has-feedback-icon {
+      border-color: $border-hover;
+    }
   }
-  &-item-col-5 {
-    flex: 0 0 20.8333%;
-    max-width: 20.8333%;
+
+  &-size-small {
+    font-size: 12px;
+    line-height: 24px;
+
+    &.#{$prefix}-item-feedback-layout-terse,
+    &.#{$prefix}-item-feedback-layout-loose {
+      &.#{$prefix}-item-feedback-has-text:not(.#{$prefix}-item-inset) {
+        margin-bottom: 0;
+      }
+    }
+
+    > .#{$prefix}-item-label {
+      min-height: 20px;
+      line-height: 24px;
+    }
+
+    > .#{$prefix}-item-control > .#{$prefix}-item-control-content,
+    > .#{$prefix}-item-control > .#{$prefix}-item-control-content > .#{$prefix}-item-control-content-component {
+      min-height: 20px;
+    }
+
+    .#{$prefix}-item-control-content-component {
+      line-height: 1.5;
+    }
+
+    .#{$prefix}-item-help,
+    .#{$prefix}-item-extra {
+      min-height: 20px;
+      line-height: 20px;
+    }
+
+    .#{$namespace}-input__wrapper,
+    .#{$namespace}-select__wrapper {
+      min-height: 24px;
+    }
+
+    .#{$namespace}-input__inner {
+      height: 22px;
+      font-size: 12px;
+    }
+
+    .#{$namespace}-select__wrapper {
+      font-size: 12px;
+    }
+
+    .#{$namespace}-textarea__inner {
+      font-size: 12px;
+    }
+
+    .#{$namespace}-button {
+      height: 24px;
+      padding: 0 8px;
+      font-size: 12px;
+    }
+
+    .#{$namespace}-radio-button__inner {
+      height: 24px;
+      line-height: 22px;
+    }
   }
-  &-item-col-6 {
-    flex: 0 0 25%;
-    max-width: 25%;
+
+  &-size-large {
+    font-size: 16px;
+    line-height: 40px;
+
+    &.#{$prefix}-item-feedback-layout-terse,
+    &.#{$prefix}-item-feedback-layout-loose {
+      &.#{$prefix}-item-feedback-has-text:not(.#{$prefix}-item-inset) {
+        margin-bottom: 0;
+      }
+    }
+
+    > .#{$prefix}-item-label {
+      min-height: 38px;
+      line-height: 40px;
+    }
+
+    > .#{$prefix}-item-control > .#{$prefix}-item-control-content,
+    > .#{$prefix}-item-control > .#{$prefix}-item-control-content > .#{$prefix}-item-control-content-component {
+      min-height: 38px;
+    }
+
+    .#{$prefix}-item-control-content-component {
+      line-height: 1.5;
+    }
+
+    .#{$prefix}-item-help,
+    .#{$prefix}-item-extra {
+      min-height: 24px;
+      line-height: 24px;
+    }
+
+    .#{$namespace}-input__wrapper,
+    .#{$namespace}-select__wrapper {
+      min-height: 40px;
+    }
+
+    .#{$namespace}-input__inner {
+      height: 38px;
+      font-size: 16px;
+    }
+
+    .#{$namespace}-select__wrapper {
+      font-size: 16px;
+    }
+
+    .#{$namespace}-textarea__inner {
+      font-size: 16px;
+    }
+
+    .#{$namespace}-button {
+      height: 40px;
+      padding: 0 8px;
+      font-size: 16px;
+    }
+
+    .#{$namespace}-radio-button__inner {
+      height: 40px;
+      line-height: 38px;
+    }
   }
-  &-item-col-7 {
-    flex: 0 0 29.1667%;
-    max-width: 29.1667%;
+
+  .#{$namespace}-upload {
+    background: transparent;
   }
-  &-item-col-8 {
-    flex: 0 0 33.3333%;
-    max-width: 33.3333%;
+
+  .#{$namespace}-upload-dragger {
+    background: $fill-blank;
   }
-  &-item-col-9 {
-    flex: 0 0 37.5%;
-    max-width: 37.5%;
+
+  .#{$namespace}-radio,
+  .#{$namespace}-checkbox {
+    margin: 0 0 0 8px;
+    font-weight: normal;
+    vertical-align: middle;
+    cursor: pointer;
+
+    &:first-child {
+      margin-inline-start: 0;
+    }
   }
-  &-item-col-10 {
-    flex: 0 0 41.6667%;
-    max-width: 41.6667%;
+
+  .#{$namespace}-input-number {
+    width: 100%;
+    vertical-align: top;
+
+    + .#{$prefix}-form-text {
+      margin-inline-start: 8px;
+    }
+
+    .#{$namespace}-input-number__increase,
+    .#{$namespace}-input-number__decrease {
+      z-index: 2;
+    }
   }
-  &-item-col-11 {
-    flex: 0 0 45.8333%;
-    max-width: 45.8333%;
+
+  .#{$namespace}-input-group {
+    .#{$namespace}-select,
+    .#{$namespace}-cascader {
+      width: auto;
+    }
   }
-  &-item-col-12 {
-    flex: 0 0 50%;
-    max-width: 50%;
+
+  textarea.#{$namespace}-textarea__inner {
+    height: auto;
   }
-  &-item-col-13 {
-    flex: 0 0 54.1667%;
-    max-width: 54.1667%;
+
+  // 1–24 栅格：labelCol / wrapperCol，保留 4 位小数
+  @for $i from 1 through 24 {
+    &-item-col-#{$i} {
+      $width: math.div(math.round(math.div($i * 1000000, 24)), 10000) * 1%;
+
+      flex: 0 0 $width;
+      max-width: $width;
+    }
   }
-  &-item-col-14 {
-    flex: 0 0 58.3333%;
-    max-width: 58.3333%;
-  }
-  &-item-col-15 {
-    flex: 0 0 62.5%;
-    max-width: 62.5%;
-  }
-  &-item-col-16 {
-    flex: 0 0 66.6667%;
-    max-width: 66.6667%;
-  }
-  &-item-col-17 {
-    flex: 0 0 70.8333%;
-    max-width: 70.8333%;
-  }
-  &-item-col-18 {
-    flex: 0 0 75%;
-    max-width: 75%;
-  }
-  &-item-col-19 {
-    flex: 0 0 79.1667%;
-    max-width: 79.1667%;
-  }
-  &-item-col-20 {
-    flex: 0 0 83.3333%;
-    max-width: 83.3333%;
-  }
-  &-item-col-21 {
-    flex: 0 0 87.5%;
-    max-width: 87.5%;
-  }
-  &-item-col-22 {
-    flex: 0 0 91.6667%;
-    max-width: 91.6667%;
-  }
-  &-item-col-23 {
-    flex: 0 0 95.8333%;
-    max-width: 95.8333%;
-  }
-  &-item-col-24 {
-    flex: 0 0 100%;
-    max-width: 100%;
+
+  &-label-align-left > .#{$prefix}-item-label {
+    justify-content: flex-start;
   }
 
   &-label-align-right > .#{$prefix}-item-label {
     justify-content: flex-end;
   }
-
-  &-control-align-right > .#{$prefix}-item-control {
-    align-items: flex-end;
-  }
 }
 
-@keyframes #{$prefix}-help-fade-in {
+@keyframes #{$prefix}-show-help-in {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-5px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.#{$prefix}-item-help {
+  &-appear,
+  &-enter {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+
+  &-appear-active,
+  &-enter-active {
+    animation-name: #{$prefix}-show-help-in;
   }
 }
 
