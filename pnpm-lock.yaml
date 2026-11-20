@@ -174,20 +174,20 @@ settings:
 catalogs:
   default:
     '@formvk/core':
-      specifier: ~1.2.0-beta.3
-      version: 1.2.0-beta.3
+      specifier: ~1.2.0-beta.4
+      version: 1.2.0-beta.4
     '@formvk/models':
-      specifier: ~1.2.0-beta.3
-      version: 1.2.0-beta.3
+      specifier: ~1.2.0-beta.4
+      version: 1.2.0-beta.4
     '@formvk/schema':
-      specifier: ~1.2.0-beta.3
-      version: 1.2.0-beta.3
+      specifier: ~1.2.0-beta.4
+      version: 1.2.0-beta.4
     '@formvk/shared':
-      specifier: ~1.2.0-beta.3
-      version: 1.2.0-beta.3
+      specifier: ~1.2.0-beta.4
+      version: 1.2.0-beta.4
     '@formvk/vue':
-      specifier: ~1.2.0-beta.3
-      version: 1.2.0-beta.3
+      specifier: ~1.2.0-beta.4
+      version: 1.2.0-beta.4
 
 overrides:
   '@vue/reactivity': ^3.5.44
@@ -201,16 +201,16 @@ importers:
         version: 2.3.2(vue@3.5.45(typescript@6.0.3))
       '@formvk/core':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3
+        version: 1.2.0-beta.4
       '@formvk/models':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3
+        version: 1.2.0-beta.4
       '@formvk/schema':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3
+        version: 1.2.0-beta.4
       '@formvk/vue':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3(vue@3.5.45(typescript@6.0.3))
+        version: 1.2.0-beta.4(vue@3.5.45(typescript@6.0.3))
       '@types/node':
         specifier: ^24.19.2
         version: 24.19.2
@@ -279,19 +279,19 @@ importers:
         version: 2.3.2(vue@3.5.45(typescript@6.0.3))
       '@formvk/core':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3
+        version: 1.2.0-beta.4
       '@formvk/models':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3
+        version: 1.2.0-beta.4
       '@formvk/schema':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3
+        version: 1.2.0-beta.4
       '@formvk/shared':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3
+        version: 1.2.0-beta.4
       '@formvk/vue':
         specifier: 'catalog:'
-        version: 1.2.0-beta.3(vue@3.5.45(typescript@6.0.3))
+        version: 1.2.0-beta.4(vue@3.5.45(typescript@6.0.3))
       dayjs:
         specifier: ^1.11.23
         version: 1.11.23
@@ -522,29 +522,29 @@ packages:
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
 
-  '@formvk/core@1.2.0-beta.3':
-    resolution: {integrity: sha512-Nz6cBSB14t7xTNi1iDX1M0xh3SSxshl4npJRXa7DZOuKMqIhqhfXFBr12qLmQnzZ7fJyxcIjKoJn10ViIj8DWA==}
+  '@formvk/core@1.2.0-beta.4':
+    resolution: {integrity: sha512-WAXbJP233tixH7b/noYTWMoXb+g9OvOGCbcs7m/ge+7M8iCWWWWC3VfsbTszqm4Y1VjpXw+/lP8vZZlSGz6r7g==}
 
-  '@formvk/models@1.2.0-beta.3':
-    resolution: {integrity: sha512-GQcfXHFqSU+rlUi99gPrX8b9RGpZaGebGpDGIPPnsiWCU7qrCADpP6ICEvK0LCWdL0llZK3GvnD4uBQKQYNK1Q==}
+  '@formvk/models@1.2.0-beta.4':
+    resolution: {integrity: sha512-clst7vOGtlVe2UoXHzFV7CowwBDDYkWUZSVaIInq+dawfZTcS3RurWL9dae5GT8+vAPe52q+KuzFHtq03mD6Kg==}
 
-  '@formvk/path@1.2.0-beta.3':
-    resolution: {integrity: sha512-bqgpQR8vuq8BEMnn3+VA+vuuWjQ3dZjpjyhctbgbQ3OnVsRmONR6c5FOUbpGc3O3tpylU2tjG+irW49NvUNlYg==}
+  '@formvk/path@1.2.0-beta.4':
+    resolution: {integrity: sha512-lLGRjItb+jeomOJskfCXwehQwWXnkxgQJvssiah/lx+9lJiQFzW0Td+cty2x6X6mE1SdGJFMJZz+r4/QDlAL/g==}
 
-  '@formvk/reactive@1.2.0-beta.3':
-    resolution: {integrity: sha512-Us8wGQGNy9vfjvhPP45k7wPvMXq/jjNFSOGME/qjiwITKsBln8bPLGUVhC3d5n6+NySPxq/IdsWZCuNUB9ij/g==}
+  '@formvk/reactive@1.2.0-beta.4':
+    resolution: {integrity: sha512-eVqN7/k5iRSrvRxaTgnNCplxN1TmGNwpan/Fbb1KANnBh7oAPfV7wZ6gPuH7oF1JKzEdsnuZUq0ZyjCN8YM9/g==}
 
-  '@formvk/schema@1.2.0-beta.3':
-    resolution: {integrity: sha512-3fMnrDvILjChcftii70gSpxxqs7x+fY8qB4npEUJqmGFNdIlHNlFMrgZEypzSaeEdOLUu9QYP8+RuPmJP+Yz6w==}
+  '@formvk/schema@1.2.0-beta.4':
+    resolution: {integrity: sha512-ryzPUO4szYj2M8IyzhhUDk+SqWAMBAtGXpOSB4IPbitdW9AGty8M3WlDEBzV89Bn6JWd2G91x5wUeGaphP2zcw==}
 
-  '@formvk/shared@1.2.0-beta.3':
-    resolution: {integrity: sha512-zGYyx6k17FiASjcGpp86pwxCOKm734TVx6eZwNQEidwZhWjXXzUhoGdlnulQfuSv/3f/CRDL7Z0H+S4eeFKtJQ==}
+  '@formvk/shared@1.2.0-beta.4':
+    resolution: {integrity: sha512-8gGB7HgI9ydqInYnMYh6rigUJvmryorC/4AQI0FhRntJ9rJNU6+fEV7Kn2/HTEFX+k/WwaPKW1upUQSEOEaJiA==}
 
-  '@formvk/validator@1.2.0-beta.3':
-    resolution: {integrity: sha512-4vNBTUzoVmjXsjj/t/ow0I+DjCQTzVk53xeKdNKH36dz/8vMJHw1gW0n4ZR4GVUc8l85AC83SU5N+JGG+nMvcg==}
+  '@formvk/validator@1.2.0-beta.4':
+    resolution: {integrity: sha512-BDLOdSzxVT8xZUyu6dR7fvNDjjZ6B4Es3AF2zTgPPDmVIMWPx3G8Lz7czXgbJ8yVvHa4TwREbwBK/sgnK5/hsg==}
 
-  '@formvk/vue@1.2.0-beta.3':
-    resolution: {integrity: sha512-bC2mdjox1A3rWVHhpjYf0DTe8byI7bNyiHmKoS6GXVmJwQruYrQkiwqyIBjiqkvqjw23pvwm66dUPyfsFjK36w==}
+  '@formvk/vue@1.2.0-beta.4':
+    resolution: {integrity: sha512-P0LrHyVTMeLBxThnTm2sxfl38lHjU5LDiG9kSDgdPRgaiOQ0nqCX6hWQ9jUgWmE+7gLYXI6Xy1LWckFsbOOxLQ==}
     peerDependencies:
       vue: ^3.5.0
 
@@ -3955,47 +3955,47 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
-  '@formvk/core@1.2.0-beta.3':
+  '@formvk/core@1.2.0-beta.4':
     dependencies:
-      '@formvk/reactive': 1.2.0-beta.3
-      '@formvk/shared': 1.2.0-beta.3
-      '@formvk/validator': 1.2.0-beta.3
+      '@formvk/reactive': 1.2.0-beta.4
+      '@formvk/shared': 1.2.0-beta.4
+      '@formvk/validator': 1.2.0-beta.4
       '@swc/helpers': 0.5.24
 
-  '@formvk/models@1.2.0-beta.3':
+  '@formvk/models@1.2.0-beta.4':
     dependencies:
-      '@formvk/core': 1.2.0-beta.3
-      '@formvk/reactive': 1.2.0-beta.3
-      '@formvk/schema': 1.2.0-beta.3
-      '@formvk/shared': 1.2.0-beta.3
+      '@formvk/core': 1.2.0-beta.4
+      '@formvk/reactive': 1.2.0-beta.4
+      '@formvk/schema': 1.2.0-beta.4
+      '@formvk/shared': 1.2.0-beta.4
       '@swc/helpers': 0.5.24
 
-  '@formvk/path@1.2.0-beta.3': {}
+  '@formvk/path@1.2.0-beta.4': {}
 
-  '@formvk/reactive@1.2.0-beta.3':
+  '@formvk/reactive@1.2.0-beta.4':
     dependencies:
       '@vue/reactivity': 3.5.45
 
-  '@formvk/schema@1.2.0-beta.3':
+  '@formvk/schema@1.2.0-beta.4':
     dependencies:
-      '@formvk/core': 1.2.0-beta.3
-      '@formvk/reactive': 1.2.0-beta.3
-      '@formvk/shared': 1.2.0-beta.3
+      '@formvk/core': 1.2.0-beta.4
+      '@formvk/reactive': 1.2.0-beta.4
+      '@formvk/shared': 1.2.0-beta.4
 
-  '@formvk/shared@1.2.0-beta.3':
+  '@formvk/shared@1.2.0-beta.4':
     dependencies:
-      '@formvk/path': 1.2.0-beta.3
+      '@formvk/path': 1.2.0-beta.4
 
-  '@formvk/validator@1.2.0-beta.3':
+  '@formvk/validator@1.2.0-beta.4':
     dependencies:
-      '@formvk/shared': 1.2.0-beta.3
+      '@formvk/shared': 1.2.0-beta.4
 
-  '@formvk/vue@1.2.0-beta.3(vue@3.5.45(typescript@6.0.3))':
+  '@formvk/vue@1.2.0-beta.4(vue@3.5.45(typescript@6.0.3))':
     dependencies:
-      '@formvk/core': 1.2.0-beta.3
-      '@formvk/reactive': 1.2.0-beta.3
-      '@formvk/schema': 1.2.0-beta.3
-      '@formvk/shared': 1.2.0-beta.3
+      '@formvk/core': 1.2.0-beta.4
+      '@formvk/reactive': 1.2.0-beta.4
+      '@formvk/schema': 1.2.0-beta.4
+      '@formvk/shared': 1.2.0-beta.4
       vue: 3.5.45(typescript@6.0.3)
 
   '@gar/promise-retry@1.0.3': {}

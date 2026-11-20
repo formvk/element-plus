@@ -5,26 +5,26 @@ overrides:
   # 否则字段变更无法触发 Vue 组件的依赖收集与重渲染
   '@vue/reactivity': ^3.5.44
 catalog:
-  '@formvk/core': ~1.2.0-beta.3
-  '@formvk/models': ~1.2.0-beta.3
-  '@formvk/react': ~1.2.0-beta.3
-  '@formvk/reactive': ~1.2.0-beta.3
-  '@formvk/reactive-react': ~1.2.0-beta.3
-  '@formvk/schema': ~1.2.0-beta.3
-  '@formvk/shared': ~1.2.0-beta.3
-  '@formvk/vue': ~1.2.0-beta.3
+  '@formvk/core': ~1.2.0-beta.4
+  '@formvk/models': ~1.2.0-beta.4
+  '@formvk/react': ~1.2.0-beta.4
+  '@formvk/reactive': ~1.2.0-beta.4
+  '@formvk/reactive-react': ~1.2.0-beta.4
+  '@formvk/schema': ~1.2.0-beta.4
+  '@formvk/shared': ~1.2.0-beta.4
+  '@formvk/vue': ~1.2.0-beta.4
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
   nx: true
 minimumReleaseAgeExclude:
-  - '@formvk/core@1.2.0-beta.3'
-  - '@formvk/models@1.2.0-beta.3'
-  - '@formvk/path@1.2.0-beta.3'
-  - '@formvk/react@1.2.0-beta.3'
-  - '@formvk/reactive-react@1.2.0-beta.3'
-  - '@formvk/reactive@1.2.0-beta.3'
-  - '@formvk/schema@1.2.0-beta.3'
-  - '@formvk/shared@1.2.0-beta.3'
-  - '@formvk/vue@1.2.0-beta.3'
-  - '@formvk/validator@1.2.0-beta.3'
+  - '@formvk/core@1.2.0-beta.4'
+  - '@formvk/models@1.2.0-beta.4'
+  - '@formvk/path@1.2.0-beta.4'
+  - '@formvk/react@1.2.0-beta.4'
+  - '@formvk/reactive-react@1.2.0-beta.4'
+  - '@formvk/reactive@1.2.0-beta.4'
+  - '@formvk/schema@1.2.0-beta.4'
+  - '@formvk/shared@1.2.0-beta.4'
+  - '@formvk/vue@1.2.0-beta.4'
+  - '@formvk/validator@1.2.0-beta.4'
