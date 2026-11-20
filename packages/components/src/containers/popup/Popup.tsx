@@ -1,5 +1,5 @@
 import type { PopupModel } from '@formvk/models'
-import type { DialogPropsPublic, DrawerPropsPublic } from 'element-plus'
+import type { DialogProps, DrawerProps } from 'element-plus'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
@@ -17,8 +17,8 @@ export type PopupFormProps =
 
 /** 公开 props：抽屉与对话框属性合并，弹窗类型由 `type` 切换 */
 type PopupFormPublicProps = DrawerFormProps &
-  Omit<DrawerPropsPublic, keyof DialogPropsPublic> &
-  DialogPropsPublic & { type?: 'drawer' | 'modal' }
+  Omit<DrawerProps, keyof DialogProps> &
+  DialogProps & { type?: 'drawer' | 'modal' }
 
 export const PopupForm = defineComponent<PopupFormPublicProps>({
   name: 'PopupForm',

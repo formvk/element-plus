@@ -3,7 +3,7 @@ import type { Schema } from '@formvk/schema'
 import { toArr } from '@formvk/shared'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElBadge, ElCard, ElCollapse, ElCollapseItem, ElEmpty } from 'element-plus'
-import type { CollapsePropsPublic } from 'element-plus'
+import type { CollapseProps } from 'element-plus'
 import { computed, defineComponent, ref, watch } from 'vue'
 
 import { cls, isComponentOf, usePrefixCls } from '../../shared'
@@ -57,7 +57,7 @@ const insertActiveKeys = (activeKeys: string[], index: number) => {
   }, [])
 }
 
-export const ArrayCollapse = defineComponent<CollapsePropsPublic & IArrayCollapseProps>({
+export const ArrayCollapse = defineComponent<CollapseProps & IArrayCollapseProps>({
   name: 'ArrayCollapse',
   inheritAttrs: false,
   props: {

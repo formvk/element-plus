@@ -3,7 +3,7 @@ import type { Field } from '@formvk/core'
 import { isArr, toArr } from '@formvk/shared'
 import { connect, mapProps, useField } from '@formvk/vue'
 import { ElButton, ElIcon, ElUpload } from 'element-plus'
-import type { UploadPropsPublic } from 'element-plus'
+import type { UploadProps } from 'element-plus'
 import { defineComponent, watch } from 'vue'
 import type { PropType, VNodeChild } from 'vue'
 
@@ -20,7 +20,7 @@ export interface IUploadProps {
 
 export type IDraggerUploadProps = IUploadProps
 
-type UploadWrapperProps = Omit<UploadPropsPublic, 'fileList' | 'onChange' | 'listType'> & IUploadProps
+type UploadWrapperProps = Omit<UploadProps, 'fileList' | 'onChange' | 'listType'> & IUploadProps
 
 const testOpts = (ext: RegExp, options: { exclude?: string[]; include?: string[] }) => {
   if (options && isArr(options.include)) {

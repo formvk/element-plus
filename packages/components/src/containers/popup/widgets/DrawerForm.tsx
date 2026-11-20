@@ -1,6 +1,6 @@
 import type { PopupModel } from '@formvk/models'
 import { ElButton, ElDrawer, ElSpace } from 'element-plus'
-import type { DrawerPropsPublic } from 'element-plus'
+import type { DrawerProps } from 'element-plus'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
@@ -17,7 +17,7 @@ export interface DrawerFormProps {
   onCancel?: (e: PopupTriggerEvent) => boolean | void | Promise<boolean | void>
 }
 
-export const DrawerForm = defineComponent<DrawerFormProps & DrawerPropsPublic>({
+export const DrawerForm = defineComponent<DrawerFormProps & DrawerProps>({
   name: 'DrawerForm',
   inheritAttrs: false,
   props: {

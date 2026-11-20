@@ -1,48 +1,10 @@
 # 接入自定义组件
 
-本指南介绍如何把任意 Vue 控件接入 Schema 体系：从最简单的受控组件，到支持数据源映射与阅读态的完整桥接组件。
+本指南介绍如何把任意 Vue 控件接入 Schema 体系：推荐通过 `connect` 完成数据源映射、阅读态与表单生命周期绑定。
 
-## 方式一：useField 受控组件
+## 推荐方式：connect + mapProps
 
-适合一次性使用、逻辑简单的场景。用 `useField` 拿到字段引用，手动绑定 `modelValue` 与 `setValue`：
-
-```vue
-<script setup lang="ts">
-import type { Field } from '@formvk/core'
-import { useField } from '@formvk/vue'
-import { ElOption, ElSelect } from 'element-plus'
-
-defineProps<{
-  options?: Array<{ label: string; value: string }>
-}>()
-
-const field = useField<Field>()
-</script>
-
-<template>
-  <ElSelect
-    :model-value="field?.value"
-    :disabled="field?.disabled || field?.readOnly"
-    @update:model-value="field?.setValue($event)"
-  >
-    <ElOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-  </ElSelect>
-</template>
-```
-
-注册到工厂后即可在 Schema 中使用：
-
-```ts
-const { OptionsProvider, fragment: f } = createSchemaOptions({
-  components: { SelectField },
-  voidComponents: { FormItem },
-  defaultDecorator: 'FormItem',
-})
-```
-
-## 方式二：connect + mapProps（推荐）
-
-可复用的桥接组件推荐使用 `connect`：绑定层会自动注入 `modelValue` / `onUpdate:modelValue`，并用 `mapProps` 描述字段到组件 props 的映射。映射对象的键值含义为 `字段侧属性: 组件侧属性`。
+可复用的桥接组件推荐使用 `connect`：绑定层会自动注入 `modelValue` / `onUpdate:modelValue`，写入值时走 `field.onInput()`，从而触发内核的输入生命周期（`onFieldInputValueChange` / `onFormInputChange`）、校验与联动；同时用 `mapProps` 描述字段到组件 props 的映射。映射对象的键值含义为 `字段侧属性: 组件侧属性`。
 
 先准备一个接收 `options` 的 Vue 包装组件：
 
@@ -82,6 +44,16 @@ export const Select = connect(
 )
 ```
 
+注册到工厂后即可在 Schema 中使用：
+
+```ts
+const { OptionsProvider, fragment: f } = createSchemaOptions({
+  components: { Select },
+  voidComponents: { FormItem },
+  defaultDecorator: 'FormItem',
+})
+```
+
 常见映射写法：
 
 | 映射 | 含义 | 典型组件 |
@@ -90,6 +62,38 @@ export const Select = connect(
 | `mapProps({ dataSource: 'data' })` | 映射到树 / 穿梭框数据 | TreeSelect / Transfer |
 
 函数形式的 mapper 适合做更复杂的转换，签名为 `(props, field) => props`。
+
+## 不推荐直接使用 useField + field.value
+
+`useField()` 只负责拿到字段引用，不包含值写入的生命周期处理。手动绑定成下面这样会错过内核的表单生命周期：
+
+```vue
+<!-- ❌ 不推荐：setValue 只写值 -->
+<ElSelect :model-value="field?.value" @update:model-value="field?.setValue($event)" />
+```
+
+`setValue()` 只写入字段值，不会触发 `onFieldInputValueChange` / `onFormInputChange`，也不会执行 `onInput` 时机的校验，导致 effects 联动、校验时机与 Schema 渲染不一致。
+
+如果确实需要脱离 Schema 手动绑定，至少把写入改为 `field.onInput()`：
+
+```vue
+<script setup lang="ts">
+import { useField } from '@formvk/vue'
+import { ElSelect } from 'element-plus'
+
+const field = useField()
+</script>
+
+<template>
+  <ElSelect
+    :model-value="field?.value"
+    :disabled="field?.disabled || field?.readOnly"
+    @update:model-value="field?.onInput($event)"
+  />
+</template>
+```
+
+但这仍需自行处理 readPretty、数据源映射和空值占位，只适合一次性场景；可复用组件请使用 `connect`。
 
 ## 处理值格式转换
 
@@ -142,5 +146,6 @@ const field = useField()
 ## 注意事项
 
 - Vue 版不需要 `observer` 之类的包裹：`useField` 返回字段引用，在模板或 `computed` 中读取字段状态即可获得响应式更新；`connect` / `mapProps` / `mapReadPretty` 已在绑定层完成追踪与透传。
+- 读取字段状态可以直接用 `useField`，但写入值不要手动调用 `setValue`：请走 `connect` 的绑定层，或至少使用 `field.onInput()`，否则会错过内核的输入生命周期。
 - 自定义控件约定通过 `modelValue` / `onUpdate:modelValue` 通信；控件事件签名不同时，在函数 mapper 或包装组件里转换为表单需要的值。
 - 数组类自定义组件可参考 `ArrayBase` 的上下文能力（`useArray` / `useIndex` / `useRecord`），见 [ArrayBase 参考](/components/array-base)。
