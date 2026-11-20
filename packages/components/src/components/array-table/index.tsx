@@ -4,7 +4,7 @@ import { isArr, isBool, isFn } from '@formvk/shared'
 import { RecursionField, useField, useFieldSchema } from '@formvk/vue'
 import { ElPagination, ElTable, ElTableColumn } from 'element-plus'
 import type { TableProps } from 'element-plus'
-import Sortable from 'sortablejs'
+import SortableJS from 'sortablejs'
 import type { InjectionKey } from 'vue'
 import { computed, defineComponent, inject, onBeforeUnmount, onMounted, provide, ref, watch } from 'vue'
 import type { PropType } from 'vue'
@@ -125,7 +125,7 @@ export const ArrayTable = defineComponent<
     const sources = useArrayTableSources()
     const addition = useAddition()
     const tableRef = ref<any>()
-    let sortable: Sortable | null = null
+    let sortable: SortableJS | null = null
 
     const paginationConfig = computed(() =>
       isBool(props.pagination) || !props.pagination ? {} : (props.pagination as Record<string, any>)
@@ -138,12 +138,7 @@ export const ArrayTable = defineComponent<
     const dataSource = computed(() => {
       const currentField = field.value as ArrayField
       const value = currentField?.value
-      return Array.isArray(value)
-        ? value.map((item, index) => ({
-            ...item,
-            [indexKey]: index,
-          }))
-        : []
+      return Array.isArray(value) ? value.map((item, index) => Object.assign({}, item, { [indexKey]: index })) : []
     })
 
     const total = computed(() => dataSource.value.length)
@@ -218,7 +213,7 @@ export const ArrayTable = defineComponent<
     onMounted(() => {
       const tbody = tableRef.value?.$el?.querySelector('tbody') as HTMLElement | null
       if (!tbody) return
-      sortable = Sortable.create(tbody, {
+      sortable = SortableJS.create(tbody, {
         animation: 150,
         handle: `.${basePrefixCls}-array-base-sort-handle`,
         ghostClass: `${basePrefixCls}-sort-ghost`,

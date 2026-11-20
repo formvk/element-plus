@@ -47,7 +47,7 @@ export const ArrayItems = defineComponent<HTMLAttributes>(
                 currentField.move(oldIndex, newIndex)
               }}
             >
-              {dataSource.map((_, index) => {
+              {dataSource.map((_item, index) => {
                 const items = Array.isArray(currentSchema.items)
                   ? currentSchema.items[index] || currentSchema.items[0]
                   : currentSchema.items

@@ -9,13 +9,12 @@ export const Transfer = connect(
     const dataSource = field.dataSource ?? (props as any).data ?? (props as any).dataSource ?? []
     return {
       ...props,
-      data: dataSource.map((item: any) => {
-        return {
-          ...item,
+      data: dataSource.map((item: any) =>
+        Object.assign({}, item, {
           label: item.label ?? item.title,
           key: item.key ?? item.value,
-        }
-      }),
+        })
+      ),
       props: {
         key: 'key',
         label: 'label',

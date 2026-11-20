@@ -116,7 +116,7 @@ export const FormTab = defineComponent<TabsPropsPublic & IFormTabProps & { prefi
           mergedFormTab.value?.setActiveKey?.(key as string)
         }}
       >
-        {tabs.value.map(({ props: tabProps, schema, name }, index) => (
+        {tabs.value.map(({ props: tabProps, schema: tabSchema, name }, index) => (
           <ElTabPane
             key={String(tabProps.key ?? index)}
             name={String(tabProps.key ?? index)}
@@ -125,7 +125,7 @@ export const FormTab = defineComponent<TabsPropsPublic & IFormTabProps & { prefi
           >
             {{
               label: () => <FeedbackBadge name={name} tab={tabProps.tab ?? tabProps.label} />,
-              default: () => <RecursionField schema={schema} name={name} />,
+              default: () => <RecursionField schema={tabSchema} name={name} />,
             }}
           </ElTabPane>
         ))}

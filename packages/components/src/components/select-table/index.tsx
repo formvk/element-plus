@@ -153,9 +153,9 @@ export const SelectTable = defineComponent<SelectTablePublicProps>({
     })
 
     const columns = computed(() =>
-      sources.value.reduce<Record<string, any>[]>((buf, { name, columnProps, schema, display }, key) => {
+      sources.value.reduce<Record<string, any>[]>((buf, { name, columnProps, schema: columnSchema, display }, key) => {
         if (display && display !== 'visible') return buf
-        if (!isColumnComponent(schema)) return buf
+        if (!isColumnComponent(columnSchema)) return buf
         const { title, dataIndex: _dataIndex, key: _key, render: _render, ...rest } = columnProps
         return buf.concat({
           key,

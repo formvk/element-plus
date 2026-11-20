@@ -90,9 +90,9 @@ const FormButtonGroupSticky = defineComponent<HTMLAttributes & IStickyProps>({
     const prefixCls = usePrefixCls('button-group')
     onMounted(() => {
       if (stickyRef.value) {
-        const computed = getInheritedBackgroundColor(stickyRef.value)
-        if (computed !== color.value) {
-          color.value = computed
+        const background = getInheritedBackgroundColor(stickyRef.value)
+        if (background !== color.value) {
+          color.value = background
         }
       }
     })

@@ -1,4 +1,4 @@
-import Sortable from 'sortablejs'
+import SortableJS from 'sortablejs'
 import { defineComponent, h, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import { usePrefixCls } from '../hooks/usePrefixCls'
@@ -34,11 +34,11 @@ export const SortableContainer = defineComponent({
   setup(props, { slots, attrs }) {
     const prefixCls = usePrefixCls()
     const containerRef = ref<HTMLElement>()
-    let sortable: Sortable | null = null
+    let sortable: SortableJS | null = null
 
     onMounted(() => {
       if (!containerRef.value) return
-      sortable = Sortable.create(containerRef.value, {
+      sortable = SortableJS.create(containerRef.value, {
         animation: 150,
         handle: props.handle || `.${prefixCls}-array-base-sort-handle`,
         ghostClass: `${prefixCls}-sort-ghost`,

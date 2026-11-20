@@ -151,11 +151,11 @@ export const FormCollapse = defineComponent<
           mergedFormCollapse.value?.setActiveKeys?.(key)
         }}
       >
-        {panels.value.map(({ props: panelProps, schema, name, key }) => (
+        {panels.value.map(({ props: panelProps, schema: panelSchema, name, key }) => (
           <ElCollapseItem key={key} name={key} disabled={panelProps.disabled}>
             {{
               title: () => badgedHeader(name, panelProps),
-              default: () => <RecursionField schema={schema} name={name} />,
+              default: () => <RecursionField schema={panelSchema} name={name} />,
             }}
           </ElCollapseItem>
         ))}

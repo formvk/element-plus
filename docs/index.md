@@ -12,6 +12,9 @@ hero:
     - theme: alt
       text: 组件总览
       link: /components/
+    - theme: alt
+      text: 内核文档
+      link: https://formvk.github.io/core/
 
 features:
   - title: Schema 驱动

@@ -140,6 +140,7 @@ export default defineConfig({
       { text: '指南', link: '/guide/install' },
       { text: '组件', link: '/components/' },
       { text: '容器', link: '/containers/' },
+      { text: '内核文档', link: 'https://formvk.github.io/core/' },
     ],
     sidebar: {
       '/guide/': [
@@ -170,6 +171,7 @@ export default defineConfig({
           items: [
             { text: 'Schema 参考', link: '/guide/schema' },
             { text: '组件参考', link: '/components/' },
+            { text: '内核文档', link: 'https://formvk.github.io/core/' },
           ],
         },
         {
