@@ -14,8 +14,11 @@ const readJson = <T>(file: string) => JSON.parse(readFileSync(path.join(rootDir,
 const componentManifest = readJson<{
   version: string
   dependencies: Record<string, string>
-  devDependencies: Record<string, string>
 }>('packages/components/package.json')
+
+const rootManifest = readJson<{
+  devDependencies: Record<string, string>
+}>('package.json')
 
 // GitHub Pages 项目站点部署在 /element-plus/ 子路径下，CI 通过 DOCS_BASE 注入；
 // 本地开发与预览未设置该变量时回退到根路径，无需改动访问方式
@@ -27,13 +30,13 @@ const catalogVersion = (name: string) => workspaceYaml.match(new RegExp(`'${name
 
 // 在线沙箱依赖与仓库实际依赖保持一致：
 // @formvk/element-plus 取包版本，@formvk/vue / @formvk/models 取 catalog，
-// element-plus / vue / dayjs 取仓库实际安装的版本
+// element-plus / vue 取根目录 devDependencies，dayjs 取包内 dependencies
 const sandboxDependencies = {
   '@formvk/element-plus': `^${componentManifest.version}`,
   '@formvk/vue': catalogVersion('@formvk/vue'),
   '@formvk/models': catalogVersion('@formvk/models'),
-  'element-plus': componentManifest.devDependencies['element-plus'],
-  vue: componentManifest.devDependencies.vue,
+  'element-plus': rootManifest.devDependencies['element-plus'],
+  vue: rootManifest.devDependencies.vue,
   dayjs: componentManifest.dependencies.dayjs,
 }
 
