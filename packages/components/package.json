@@ -58,19 +58,6 @@
     "dayjs": "^1.11.23",
     "sortablejs": "^1.15.7"
   },
-  "devDependencies": {
-    "@microsoft/api-extractor": "^7.60.1",
-    "@types/sortablejs": "^1.15.9",
-    "@vitejs/plugin-vue": "^6.0.11",
-    "@vitejs/plugin-vue-jsx": "^5.1.6",
-    "@vue/test-utils": "^2.6.0",
-    "element-plus": "^2.14.7",
-    "happy-dom": "^21.0.4",
-    "sass": "^1.108.2",
-    "vite": "^8.3.8",
-    "vite-plugin-dts": "^5.1.2",
-    "vue": "^3.5.44"
-  },
   "peerDependencies": {
     "element-plus": "^2.14.0",
     "vue": "^3.5.0"
