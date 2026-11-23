@@ -18,3 +18,30 @@
 .vp-doc .custom-block {
   border-radius: 8px;
 }
+
+/* 示例里的 Element Plus 表格复用组件自身样式，抵消 VitePress 文档表格的默认样式 */
+.vp-doc .el-table table {
+  display: table;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow-x: visible;
+}
+
+.vp-doc .el-table th,
+.vp-doc .el-table td {
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  text-align: inherit;
+}
+
+.vp-doc .el-table th {
+  color: var(--el-table-header-text-color);
+  background-color: var(--el-table-header-bg-color);
+}
+
+.vp-doc .el-table tr {
+  border-top: 0;
+  background-color: var(--el-table-tr-bg-color);
+}

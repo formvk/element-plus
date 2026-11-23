@@ -743,18 +743,20 @@ $gap: 8px;
 /* -------------------------------- Select Table -------------------------------- */
 
 .#{$prefix}-select-table {
-  display: flex;
-  flex-direction: column;
-  gap: $gap;
-
   &-search {
     max-width: 320px;
   }
 
   &-selection {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    vertical-align: middle;
+
+    .cell {
+      text-align: center;
+    }
+
+    .#{$namespace}-radio__label {
+      padding-left: 0;
+    }
   }
 }
 
