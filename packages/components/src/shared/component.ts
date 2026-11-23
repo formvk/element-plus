@@ -11,7 +11,6 @@ import { isStr } from '@formvk/shared'
 export const isComponentOf = (component: unknown, keyword: string): boolean => {
   if (isStr(component)) return component.includes(keyword)
   if (!component) return false
-  const named = component as { displayName?: string; name?: string }
-  const name = named.displayName || named.name
+  const name = (component as { name?: string }).name
   return isStr(name) ? name.includes(keyword) : false
 }
