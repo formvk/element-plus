@@ -32,6 +32,8 @@ describe('CrudTable', () => {
       keyword: f.Input({ title: '关键字' }),
     })
 
+    const textRender = renders.text()
+
     const wrapper = mount(() => (
       <OptionsProvider>
         <CrudTable table={table} row-key="id" search={searchSchema}>
@@ -39,7 +41,7 @@ describe('CrudTable', () => {
             default: () => (
               <ElTableColumn label="名称" min-width="120">
                 {{
-                  default: ({ row, $index }: any) => renders.text()(row.name, row, $index),
+                  default: ({ row, $index }: any) => textRender(row.name, row, $index),
                 }}
               </ElTableColumn>
             ),

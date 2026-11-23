@@ -3,6 +3,9 @@ import DefaultTheme from 'vitepress/theme'
 // 样式副作用导入，无需绑定变量
 // oxlint-disable-next-line import/no-unassigned-import
 import 'element-plus/dist/index.css'
+// Element Plus 暗色变量，跟随 VitePress 的 html.dark 切换
+// oxlint-disable-next-line import/no-unassigned-import
+import 'element-plus/theme-chalk/dark/css-vars.css'
 // 组件库样式不再由入口自动引入，文档站按源码方式引入 scss
 // oxlint-disable-next-line import/no-unassigned-import
 import '../../../packages/components/src/style/index.scss'

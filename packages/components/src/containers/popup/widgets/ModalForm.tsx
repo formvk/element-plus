@@ -9,7 +9,7 @@ import { SchemaForm } from '../../form'
 /** 弹窗确认/取消回调的事件联合类型，同时覆盖鼠标与键盘触发 */
 export type PopupTriggerEvent = KeyboardEvent | MouseEvent | Event
 
-export interface ModalFormProps {
+export interface ModalFormProps extends DialogProps {
   /** 弹窗表单模型，内部复用模型创建的 form 实例 */
   popup: PopupModel
   schema?: any
@@ -19,7 +19,7 @@ export interface ModalFormProps {
   onCancel?: (e: PopupTriggerEvent) => boolean | void | Promise<boolean | void>
 }
 
-export const ModalForm = defineComponent<ModalFormProps & DialogProps>({
+export const ModalForm = defineComponent<ModalFormProps>({
   name: 'ModalForm',
   inheritAttrs: false,
   props: {

@@ -1,16 +1,24 @@
 # 表格渲染器
 
-`renders` 是一组开箱即用的表格列渲染器，用于把常见的数据展示需求收敛成一行配置：
+`renders` 是一组开箱即用的表格列渲染器，配合 `columns` 配置即可直接得到一列：
 
 ```vue
-<ElTableColumn label="名称" prop="name">
-  <template #default="{ row, $index }">
-    <Cell :render="renders.text({ ellipsis: true })" :text="row.name" :record="row" :index="$index" />
-  </template>
-</ElTableColumn>
+<script setup lang="ts">
+import { CrudTable, renders } from '@formvk/element-plus'
+import type { DataTableProps } from '@formvk/element-plus'
+
+const columns: DataTableProps<IUser>['columns'] = [
+  { label: '序号', width: 70, render: renders.serial() },
+  { label: '名称', prop: 'name', render: renders.text({ ellipsis: true }) },
+]
+</script>
+
+<template>
+  <CrudTable :table="table" :columns="columns" />
+</template>
 ```
 
-每个渲染器都返回 `(text, record, index) => VNodeChild` 的列渲染函数；`ElTableColumn` 只提供作用域插槽，因此需要一个极简的 `Cell` 组件在插槽内调用渲染函数：
+每个渲染器都返回 `(text, record, index) => VNodeChild` 的列渲染函数。如果不用 `columns` 而直接写 `ElTableColumn`，由于 `ElTableColumn` 只提供作用域插槽，需要一个极简的 `Cell` 组件在插槽内调用渲染函数：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -34,7 +42,7 @@ const Cell = defineComponent({
 })
 ```
 
-下文示例中的 `Cell` 均指这个适配组件。
+下文的插槽示例中，`Cell` 均指这个适配组件。
 
 ## 基础用法
 
@@ -58,6 +66,8 @@ const Cell = defineComponent({
 ```vue
 <script setup lang="ts">
 import { TableRenderProvider, renders } from '@formvk/element-plus'
+
+const nameRender = renders.text()
 </script>
 
 <template>
@@ -65,7 +75,7 @@ import { TableRenderProvider, renders } from '@formvk/element-plus'
     <ElTable :data="table.records">
       <ElTableColumn label="名称" prop="name">
         <template #default="{ row, $index }">
-          <Cell :render="renders.text()" :text="row.name" :record="row" :index="$index" />
+          <Cell :render="nameRender" :text="row.name" :record="row" :index="$index" />
         </template>
       </ElTableColumn>
     </ElTable>
@@ -158,6 +168,7 @@ const statusRender = renders.createRender(props => h('span', `${props.record.nam
 
 ## 注意事项
 
-- 渲染器返回的是列渲染函数，而不是 Vue 组件；需要像 demo 一样通过 `Cell` 适配组件在 `ElTableColumn` 的默认插槽内调用。
+- 渲染器返回的是列渲染函数，推荐直接作为 `columns` 的 `render`；直接写 `ElTableColumn` 时需要通过 `Cell` 适配组件在默认插槽内调用。
+- `renders.xxx()` 会创建单元格组件，应在 `setup` 中调用一次并复用；不要在模板表达式或渲染函数里调用，否则每次渲染都会创建新组件并触发重新挂载。
 - `option` / `tag` 的选项值按 `value` 全等匹配，树形结构会返回从根到目标节点的链路。
 - `ellipsis` 首屏测量在挂载后完成，单元格内容后续变化时不会重新测量。

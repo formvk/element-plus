@@ -7,7 +7,7 @@ import type { PropType } from 'vue'
 import { SchemaForm } from '../../form'
 import type { PopupTriggerEvent } from './ModalForm'
 
-export interface DrawerFormProps {
+export interface DrawerFormProps extends DrawerProps {
   /** 弹窗表单模型，内部复用模型创建的 form 实例 */
   popup: PopupModel
   schema?: any
@@ -17,7 +17,7 @@ export interface DrawerFormProps {
   onCancel?: (e: PopupTriggerEvent) => boolean | void | Promise<boolean | void>
 }
 
-export const DrawerForm = defineComponent<DrawerFormProps & DrawerProps>({
+export const DrawerForm = defineComponent<DrawerFormProps>({
   name: 'DrawerForm',
   inheritAttrs: false,
   props: {

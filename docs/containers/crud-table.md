@@ -62,24 +62,7 @@
 | `editProps` | `CrudTablePopupProps` | — | 编辑弹窗配置，覆盖 `popupProps` |
 | 其他 | `ElTable` 属性 | — | 透传给 `ElTable`，如 `row-key`、`border`；`data` 与默认 class 由容器接管 |
 
-表格列通过默认插槽传入 `ElTableColumn`：
-
-```vue
-<CrudTable :table="table" row-key="id" :search="searchSchema" :add="addSchema" :edit="editSchema">
-  <ElTableColumn label="序号" width="70">
-    <template #default="{ $index }">
-      <Cell :render="renders.serial()" :index="$index" />
-    </template>
-  </ElTableColumn>
-  <ElTableColumn label="用户名" prop="username">
-    <template #default="{ row, $index }">
-      <Cell :render="renders.text()" :text="row.username" :record="row" :index="$index" />
-    </template>
-  </ElTableColumn>
-</CrudTable>
-```
-
-也可以改用 `columns` 配置列，每列的 `render` 直接使用 `renders` 渲染器，无需再包一层 `Cell`；`columns` 会与 `scope`、`$table`、`$state` 一起编译，因此 `label`、`prop` 等字段同样支持 `{{ }}` 表达式：
+推荐通过 `columns` 配置列，每列的 `render` 直接使用 `renders` 渲染器；`columns` 会与 `scope`、`$table`、`$state` 一起编译，因此 `label`、`prop` 等字段同样支持 `{{ }}` 表达式：
 
 ```vue
 <script setup lang="ts">
@@ -95,6 +78,33 @@ const columns: DataTableProps['columns'] = [
 
 <template>
   <CrudTable :table="table" row-key="id" :columns="columns" />
+</template>
+```
+
+需要完全自定义列结构时，仍可通过默认插槽传入 `ElTableColumn`；由于插槽只暴露作用域数据，`renders` 返回的渲染函数需要用一个极简的 `Cell` 组件来调用：
+
+```vue
+<script setup lang="ts">
+import { renders } from '@formvk/element-plus'
+
+// 渲染器会创建单元格组件，在 setup 中调用一次并复用
+const serialRender = renders.serial()
+const textRender = renders.text()
+</script>
+
+<template>
+  <CrudTable :table="table" row-key="id" :search="searchSchema" :add="addSchema" :edit="editSchema">
+    <ElTableColumn label="序号" width="70">
+      <template #default="{ $index }">
+        <Cell :render="serialRender" :index="$index" />
+      </template>
+    </ElTableColumn>
+    <ElTableColumn label="用户名" prop="username">
+      <template #default="{ row, $index }">
+        <Cell :render="textRender" :text="row.username" :record="row" :index="$index" />
+      </template>
+    </ElTableColumn>
+  </CrudTable>
 </template>
 ```
 
@@ -140,23 +150,24 @@ const columns: DataTableProps['columns'] = [
 
 ## 表格渲染器
 
-`CrudTable` 会自动注入表格渲染上下文，因此列上可以直接使用内置渲染器，无需手写展示逻辑：
+`CrudTable` 会自动注入表格渲染上下文，因此 `columns` 的 `render` 中可以直接使用内置渲染器，无需手写展示逻辑：
 
 ```vue
 <script setup lang="ts">
-import { renders } from '@formvk/element-plus'
+import { CrudTable, renders } from '@formvk/element-plus'
+import type { DataTableProps } from '@formvk/element-plus'
+
+const columns: DataTableProps['columns'] = [
+  { label: '名称', prop: 'name', render: renders.text({ ellipsis: true }) },
+]
 </script>
 
 <template>
-  <ElTableColumn label="名称" prop="name">
-    <template #default="{ row, $index }">
-      <Cell :render="renders.text({ ellipsis: true })" :text="row.name" :record="row" :index="$index" />
-    </template>
-  </ElTableColumn>
+  <CrudTable :table="table" row-key="id" :columns="columns" />
 </template>
 ```
 
-`renders.xxx()` 返回 `(text, record, index) => VNodeChild` 的列渲染函数；由于 `ElTableColumn` 只提供作用域插槽，需要像 demo 一样用一个极简的 `Cell` 组件在插槽内调用渲染函数。渲染器可读取 `table`、`$state`、`scope` 与单元格上下文，完整列表见 [表格渲染器](/containers/renders)。
+`renders.xxx()` 返回 `(text, record, index) => VNodeChild` 的列渲染函数，可读取 `table`、`$state`、`scope` 与单元格上下文，完整列表见 [表格渲染器](/containers/renders)。
 
 ## 自由组合
 

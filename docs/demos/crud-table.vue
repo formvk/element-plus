@@ -1,10 +1,9 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import { CrudTable, arrayComponents, fieldComponents, renders, voidComponents } from '@formvk/element-plus'
+import type { DataTableProps } from '@formvk/element-plus'
 import { TableModel } from '@formvk/models'
 import { createSchema, createSchemaOptions } from '@formvk/vue'
-import { ElButton, ElPopconfirm, ElSpace, ElTableColumn } from 'element-plus'
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import { ElButton, ElPopconfirm, ElSpace } from 'element-plus'
 
 // 样式副作用导入，无需绑定变量
 // oxlint-disable-next-line import/no-unassigned-import
@@ -68,23 +67,32 @@ const table = new TableModel<IUser>({
   },
 })
 
-/** 把 renders 的列渲染函数适配成 ElTableColumn 默认插槽可用的组件 */
-const Cell = defineComponent({
-  name: 'RenderCell',
-  inheritAttrs: false,
-  props: {
-    render: {
-      type: Function as PropType<(text: any, record: any, index: number) => any>,
-      required: true,
-    },
-    text: { type: null as unknown as PropType<any>, default: undefined },
-    record: { type: Object as PropType<Record<string, any>>, default: undefined },
-    index: { type: Number, default: 0 },
+/** columns 里直接使用 renders，无需再包一层 Cell 组件 */
+const columns: DataTableProps<IUser>['columns'] = [
+  { label: '序号', width: 70, render: renders.serial() },
+  { label: '用户名', prop: 'username', render: renders.text() },
+  { label: '邮箱', prop: 'email', render: renders.text({ ellipsis: true }) },
+  {
+    label: '操作',
+    width: 140,
+    render: (_text, record) => (
+      <ElSpace>
+        <ElButton link type="primary" onClick={() => table.editPopup.open(record)}>
+          编辑
+        </ElButton>
+        <ElPopconfirm title={`确认删除「${record.username}」？`} onConfirm={() => table.onRemove(record)}>
+          {{
+            reference: () => (
+              <ElButton link type="danger">
+                删除
+              </ElButton>
+            ),
+          }}
+        </ElPopconfirm>
+      </ElSpace>
+    ),
   },
-  setup(props) {
-    return () => props.render(props.text, props.record, props.index)
-  },
-})
+]
 </script>
 
 <template>
@@ -95,39 +103,12 @@ const Cell = defineComponent({
         :table="table"
         title="用户"
         row-key="id"
+        :columns="columns"
         :search="searchSchema"
         :add="formSchema"
         :edit="formSchema"
         :popup-props="{ type: 'modal', width: 480 }"
-      >
-        <ElTableColumn label="序号" width="70">
-          <template #default="{ $index }">
-            <Cell :render="renders.serial()" :index="$index" />
-          </template>
-        </ElTableColumn>
-        <ElTableColumn label="用户名" prop="username">
-          <template #default="{ row, $index }">
-            <Cell :render="renders.text()" :text="row.username" :record="row" :index="$index" />
-          </template>
-        </ElTableColumn>
-        <ElTableColumn label="邮箱" prop="email">
-          <template #default="{ row, $index }">
-            <Cell :render="renders.text({ ellipsis: true })" :text="row.email" :record="row" :index="$index" />
-          </template>
-        </ElTableColumn>
-        <ElTableColumn label="操作" width="140">
-          <template #default="{ row }">
-            <ElSpace>
-              <ElButton link type="primary" @click="table.editPopup.open(row)">编辑</ElButton>
-              <ElPopconfirm :title="`确认删除「${row.username}」？`" @confirm="table.onRemove(row)">
-                <template #reference>
-                  <ElButton link type="danger">删除</ElButton>
-                </template>
-              </ElPopconfirm>
-            </ElSpace>
-          </template>
-        </ElTableColumn>
-      </CrudTable>
+      />
     </div>
   </OptionsProvider>
 </template>

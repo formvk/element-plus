@@ -1,10 +1,9 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import { CrudTable, arrayComponents, fieldComponents, renders, voidComponents } from '@formvk/element-plus'
+import type { DataTableProps } from '@formvk/element-plus'
 import { TableModel } from '@formvk/models'
 import { createSchema, createSchemaOptions } from '@formvk/vue'
-import { ElButton, ElPopconfirm, ElSpace, ElTableColumn } from 'element-plus'
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import { ElButton, ElPopconfirm, ElSpace } from 'element-plus'
 
 // 样式副作用导入，无需绑定变量
 // oxlint-disable-next-line import/no-unassigned-import
@@ -88,80 +87,47 @@ const table = new TableModel<ITask>({
   },
 })
 
-/** 把 renders 的列渲染函数适配成 ElTableColumn 默认插槽可用的组件 */
-const Cell = defineComponent({
-  name: 'RenderCell',
-  inheritAttrs: false,
-  props: {
-    render: {
-      type: Function as PropType<(text: any, record: any, index: number) => any>,
-      required: true,
-    },
-    text: { type: null as unknown as PropType<any>, default: undefined },
-    record: { type: Object as PropType<Record<string, any>>, default: undefined },
-    index: { type: Number, default: 0 },
+/** columns 里直接使用 renders，无需再包一层 Cell 组件 */
+const columns: DataTableProps<ITask>['columns'] = [
+  { label: '序号', width: 70, render: renders.serial() },
+  { label: '任务名称', prop: 'name', minWidth: 180, render: renders.text({ ellipsis: true }) },
+  { label: '状态', prop: 'status', width: 100, render: renders.option(statusOptions) },
+  { label: '优先级', prop: 'level', width: 100, render: renders.tag(levelOptions) },
+  { label: '封面', prop: 'avatar', width: 90, render: renders.image({ size: 32, style: { borderRadius: '4px' } }) },
+  { label: '链接', prop: 'homepage', minWidth: 180, render: renders.link() },
+  { label: '创建时间', prop: 'createdAt', width: 180, render: renders.time() },
+  {
+    label: '操作',
+    width: 140,
+    render: (_text, record) => (
+      <ElSpace>
+        <ElButton link type="primary" onClick={() => table.editPopup.open(record)}>
+          编辑
+        </ElButton>
+        <ElPopconfirm title={`确认删除「${record.name}」？`} onConfirm={() => table.onRemove(record)}>
+          {{
+            reference: () => (
+              <ElButton link type="danger">
+                删除
+              </ElButton>
+            ),
+          }}
+        </ElPopconfirm>
+      </ElSpace>
+    ),
   },
-  setup(props) {
-    return () => props.render(props.text, props.record, props.index)
-  },
-})
+]
 </script>
 
 <template>
   <OptionsProvider>
-    <CrudTable :table="table" row-key="id" title="任务" :edit="editSchema" :popup-props="{ type: 'modal', width: 480 }">
-      <ElTableColumn label="序号" width="70">
-        <template #default="{ $index }">
-          <Cell :render="renders.serial()" :index="$index" />
-        </template>
-      </ElTableColumn>
-      <ElTableColumn label="任务名称" prop="name" min-width="180">
-        <template #default="{ row, $index }">
-          <Cell :render="renders.text({ ellipsis: true })" :text="row.name" :record="row" :index="$index" />
-        </template>
-      </ElTableColumn>
-      <ElTableColumn label="状态" prop="status" width="100">
-        <template #default="{ row, $index }">
-          <Cell :render="renders.option(statusOptions)" :text="row.status" :record="row" :index="$index" />
-        </template>
-      </ElTableColumn>
-      <ElTableColumn label="优先级" prop="level" width="100">
-        <template #default="{ row, $index }">
-          <Cell :render="renders.tag(levelOptions)" :text="row.level" :record="row" :index="$index" />
-        </template>
-      </ElTableColumn>
-      <ElTableColumn label="封面" prop="avatar" width="90">
-        <template #default="{ row, $index }">
-          <Cell
-            :render="renders.image({ size: 32, style: { borderRadius: '4px' } })"
-            :text="row.avatar"
-            :record="row"
-            :index="$index"
-          />
-        </template>
-      </ElTableColumn>
-      <ElTableColumn label="链接" prop="homepage" min-width="180">
-        <template #default="{ row, $index }">
-          <Cell :render="renders.link()" :text="row.homepage" :record="row" :index="$index" />
-        </template>
-      </ElTableColumn>
-      <ElTableColumn label="创建时间" prop="createdAt" width="180">
-        <template #default="{ row, $index }">
-          <Cell :render="renders.time()" :text="row.createdAt" :record="row" :index="$index" />
-        </template>
-      </ElTableColumn>
-      <ElTableColumn label="操作" width="140">
-        <template #default="{ row }">
-          <ElSpace>
-            <ElButton link type="primary" @click="table.editPopup.open(row)">编辑</ElButton>
-            <ElPopconfirm :title="`确认删除「${row.name}」？`" @confirm="table.onRemove(row)">
-              <template #reference>
-                <ElButton link type="danger">删除</ElButton>
-              </template>
-            </ElPopconfirm>
-          </ElSpace>
-        </template>
-      </ElTableColumn>
-    </CrudTable>
+    <CrudTable
+      :table="table"
+      row-key="id"
+      title="任务"
+      :columns="columns"
+      :edit="editSchema"
+      :popup-props="{ type: 'modal', width: 480 }"
+    />
   </OptionsProvider>
 </template>
