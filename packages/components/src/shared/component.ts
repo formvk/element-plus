@@ -9,9 +9,9 @@ import { isStr } from '@formvk/shared'
  * 3. `{{...}}` 表达式字符串，渲染时才能确定最终组件。
  */
 export const isComponentOf = (component: unknown, keyword: string): boolean => {
-  if (isStr(component)) return component.indexOf(keyword) > -1
+  if (isStr(component)) return component.includes(keyword)
   if (!component) return false
   const named = component as { displayName?: string; name?: string }
   const name = named.displayName || named.name
-  return isStr(name) ? name.indexOf(keyword) > -1 : false
+  return isStr(name) ? name.includes(keyword) : false
 }

@@ -56,8 +56,10 @@ const getSchemaDefaultValue = (schema?: Schema): any => {
   if (schema?.type === 'array') return []
   if (schema?.type === 'object') return {}
   if (schema?.type === 'void') {
-    for (const key in schema.properties) {
-      const value = getSchemaDefaultValue(schema.properties[key])
+    const properties = schema.properties
+    if (!properties) return
+    for (const key of Object.keys(properties)) {
+      const value = getSchemaDefaultValue(properties[key])
       if (isValid(value)) return value
     }
   }

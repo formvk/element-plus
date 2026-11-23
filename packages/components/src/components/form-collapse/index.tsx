@@ -63,7 +63,7 @@ export const createFormCollapse = (defaultActiveKeys?: ActiveKeys): IFormCollaps
         if (formCollapse.activeKeys.includes(key)) {
           return true
         }
-      } else if (formCollapse.activeKeys == key) {
+      } else if (formCollapse.activeKeys === key) {
         return true
       }
       return false
@@ -74,7 +74,7 @@ export const createFormCollapse = (defaultActiveKeys?: ActiveKeys): IFormCollaps
     },
     removeActiveKey(key: ActiveKey) {
       if (Array.isArray(formCollapse.activeKeys)) {
-        formCollapse.activeKeys = formCollapse.activeKeys.filter(item => item != key)
+        formCollapse.activeKeys = formCollapse.activeKeys.filter(item => item !== key)
       } else {
         formCollapse.activeKeys = ''
       }
